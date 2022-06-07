@@ -1,0 +1,52 @@
+.blog-custom .form-file-label-custom {
+    width: 97%;
+    top: 25px;
+    left: auto;
+    right: auto
+}
+
+.blog-custom .select2-container:focus {
+    color: #66799e;
+    background-color: #ffffff;
+    border-color: #566190;
+    outline: 0;
+    box-shadow: inset 0 1px 2px rgba(46, 54, 80, 0.075), 0 0 0 0.2rem rgba(38, 43, 64, 0.25);
+}
+
+.blog-custom .select2-container--default .select2-selection--multiple {
+    border: 0.0625rem solid #d1d7e0;
+    border-radius: 0.5rem;
+}
+
+.blog-custom .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: 0.0625rem solid #d1d7e0;
+    box-shadow: inset 0 1px 2px rgba(46, 54, 80, 0.075), 0 0 0 0.2rem rgba(38, 43, 64, 0.25);
+}
+
+.blog-custom .editorjs-blog {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 0.5rem;
+}
+
+#image_preview_container {
+    width: 50%;
+}
+
+.question-custom .profileImage {
+    width: 45px;
+    height: 42px;
+    border-radius: 50%;
+    background: #512DA8;
+    font-size: 25px;
+    color: #fff;
+    text-align: center;
+    line-height: 32px;
+    margin: 5px 10px;
+}
+
+.question-custom .que-header {
+    color: #000;
+    font-weight: bolder;
+    margin-top: 15px;
+}

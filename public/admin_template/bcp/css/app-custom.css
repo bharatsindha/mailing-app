@@ -1,0 +1,51 @@
+/*
+ * Custom CSS
+ */
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.full-bg {
+    /* background-size: cover !important; */
+    /* background-repeat: no-repeat !important; */
+}
+
+.ajax-content-wrapper {
+    position: relative;
+}
+
+a.user-type>span.checked {
+    display: none;
+}
+a.user-type.selected>span.checked {
+    display: inline;
+}
+@media (min-width: 768px) {
+    .login-page-wizard .content {
+        margin-left: unset;
+    }
+}
+.login-page-wizard .steps>ul {
+    display: none;
+}
+.login-page-wizard .actions {
+    display: none;
+}
