@@ -13,6 +13,13 @@
         <link type="text/css" href="{{ asset('admin_template/vendor/notyf/notyf.min.css') }}" rel="stylesheet">
         <!-- Volt CSS -->
         <link type="text/css" href="{{ asset('admin_template/css/volt.css') }}" rel="stylesheet">
+
+        <link type="text/css" href="{{ asset('admin_template/vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
+        <style>
+            .sidebar-inner {
+                overflow-y: inherit;
+            }
+        </style>
     @show
 </head>
 <body>
@@ -32,11 +39,11 @@
     <script src="{{ asset('admin_template/vendor/@popperjs/core/dist/umd/popper.min.js') }}"></script>
     <script src="{{ asset('admin_template/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- Vendor JS -->
-    {{--<script src="{{ asset('admin_template/vendor/onscreen/dist/on-screen.umd.min.js') }}"></script>--}}
+    <script src="{{ asset('admin_template/vendor/onscreen/dist/on-screen.umd.min.js') }}"></script>
     <!-- Slider -->
     {{--<script src="{{ asset('admin_template/vendor/nouislider/distribute/nouislider.min.js') }}"></script>--}}
     <!-- Smooth scroll -->
-    {{--<script src="{{ asset('admin_template/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js') }}"></script>--}}
+    <script src="{{ asset('admin_template/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js') }}"></script>
     <!-- Charts -->
     {{--<script src="{{ asset('admin_template/vendor/chartist/dist/chartist.min.js') }}"></script>--}}
     {{--<script
@@ -52,7 +59,13 @@
     <!-- Simplebar -->
     <script src="{{ asset('admin_template/vendor/simplebar/dist/simplebar.min.js') }}"></script>
     <!-- Volt JS -->
-    <script src="{{ asset('admin_template/js/volt.js') }}"></script>
+    <script src="{{ asset('admin_template/assets/js/volt.js') }}"></script>
+
+    <script src="{{ asset('admin_template/vendor/fontawesome/js/all.min.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    @include('layouts.messages')
 @show
 </body>
 </html>

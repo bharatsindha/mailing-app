@@ -1,3 +1,5 @@
 {
-    "Dashboard": true
+    "Dashboard": true,
+    "User": true,
+    "Domain": true
 }

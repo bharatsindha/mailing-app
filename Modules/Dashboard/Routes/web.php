@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('admin.dashboard');
-});
-
 Route::prefix('dashboard')
     ->middleware(['auth', 'check.role.web:admin'])
     ->name('admin.')

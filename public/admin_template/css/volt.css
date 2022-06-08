@@ -3654,10 +3654,6 @@ progress {
     vertical-align: bottom;
 }
 
-.table > :not(:first-child) {
-    border-top: 0.125rem solid currentColor;
-}
-
 .caption-top {
     caption-side: top;
 }
