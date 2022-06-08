@@ -42,6 +42,23 @@
                     <span class="sidebar-text">Dashboard</span>
                 </a>
             </li>
+            <li class="nav-item {{ (request()->is('domains') || request()->is('domains/*')) ? 'active' : '' }}">
+                <a href="{{ route('admin.domains.index') }}" class="nav-link">
+                    <span class="sidebar-icon">
+                        @include('icons.users')
+                    </span>
+                    <span class="sidebar-text">Domains</span>
+                </a>
+            </li>
+            <li class="nav-item {{ (request()->is('emails') || request()->is('emails/*')) ? 'active' : '' }}">
+                <a href="{{ route('admin.emails.index') }}" class="nav-link">
+                    <span class="sidebar-icon">
+                        @include('icons.users')
+                    </span>
+                    <span class="sidebar-text">Emails</span>
+                </a>
+            </li>
+
             <li class="nav-item {{ (request()->is('users') || request()->is('users/*')) ? 'active' : '' }}">
                 <a href="{{ route('admin.users.index') }}" class="nav-link">
                     <span class="sidebar-icon">

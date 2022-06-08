@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Domain\Http\Requests;
+namespace Modules\Email\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDomainRequest extends FormRequest
+class StoreEmailRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,10 +15,9 @@ class StoreDomainRequest extends FormRequest
     {
         $id = ($this->segment(2) > 0) ? ',' . $this->segment(2) : '';
         return [
-            'name'       => 'required|max:255',
-            'url'        => 'required|regex:/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/|max:255|unique:domains,url' . $id,
-            'client_id' => 'required',
-            'client_secret' => 'required',
+            'domain_id'    => 'required',
+            'sender_name'  => 'required',
+            'sender_email' => 'required|max:255|unique:emails,sender_email' . $id,
         ];
     }
 

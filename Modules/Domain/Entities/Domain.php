@@ -13,7 +13,7 @@ class Domain extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'url', 'secret_key', 'credential'
+        'name', 'url', 'client_id', 'client_secret'
     ];
 
     /**
@@ -29,11 +29,21 @@ class Domain extends Model
                 $q->where(function ($query) use ($keyword) {
                     $query->where('url', 'LIKE', '%' . $keyword . '%')
                         ->orWhere('name', 'LIKE', '%' . $keyword . '%')
-                        ->orWhere('secret_key', 'LIKE', '%' . $keyword . '%')
-                        ->orWhere('credential', 'LIKE', '%' . $keyword . '%');
+                        ->orWhere('client_id', 'LIKE', '%' . $keyword . '%')
+                        ->orWhere('client_secret', 'LIKE', '%' . $keyword . '%');
                 });
             })
             ->orderBy('id', 'desc');
+    }
+
+    /**
+     * Get domain options
+     *
+     * @return mixed
+     */
+    public static function getDomainOptions()
+    {
+        return self::select(['id', 'name', 'url'])->orderBy('name', 'asc')->get()->toArray();
     }
 
 }

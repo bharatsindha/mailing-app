@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
 use Modules\Domain\Entities\Domain;
 use Modules\Domain\Http\Requests\StoreDomainRequest;
+use Throwable;
 
 class DomainController extends Controller
 {
@@ -48,11 +49,14 @@ class DomainController extends Controller
     {
         try {
             $domain = new Domain($request->all());
+            $domain->client_id = trim($domain->client_id);
+            $domain->client_secret = trim($domain->client_secret);
             $domain->save();
 
             return redirect()->route('admin.domains.index')->with('alert-success', 'Domain added successfully.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('alert-danger', 'Failed to add domain. Please try again.');
+        } catch (Throwable $e) {
+            return redirect()->back()
+                ->with('alert-danger', 'Failed to add domain. Error: ' . $e->getMessage());
         }
     }
 
@@ -92,8 +96,9 @@ class DomainController extends Controller
             $domain->save();
 
             return redirect()->route('admin.domains.index')->with('alert-success', 'Domain updated successfully.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('alert-danger', 'Failed to update domain. Please try again.');
+        } catch (Throwable $e) {
+            return redirect()->back()
+                ->with('alert-danger', 'Failed to update domain. Error: ' . $e->getMessage());
         }
     }
 
@@ -109,8 +114,9 @@ class DomainController extends Controller
             $domain->delete();
 
             return redirect()->route('admin.domains.index')->with('alert-success', 'Domain deleted successfully.');
-        } catch (Exception $e) {
-            return redirect()->back()->with('alert-danger', 'Failed to delete domain. Please try again.');
+        } catch (Throwable $e) {
+            return redirect()->back()
+                ->with('alert-danger', 'Failed to delete domain. Error: ' . $e->getMessage());
         }
     }
 }

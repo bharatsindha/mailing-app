@@ -6,9 +6,9 @@
                     <thead class="thead-light">
                     <tr>
                         <th class="border-0 rounded-start">{{ __('#') }}</th>
-                        <th class="border-0">{{ __('Name') }}</th>
-                        <th class="border-0">{{ __('Email') }}</th>
-                        <th class="border-0">{{ __('Role') }}</th>
+                        <th class="border-0">{{ __('Domain') }}</th>
+                        <th class="border-0">{{ __('Sender Name') }}</th>
+                        <th class="border-0">{{ __('Sender Email') }}</th>
                         <th class="border-0">{{ __('Created At') }}</th>
                         <th class="border-0 rounded-end text-end">{{ __('Action') }}</th>
                     </tr>
@@ -17,9 +17,13 @@
                     @foreach ($results as $result)
                         <tr>
                             <td><span class="font-weight-bold">{{ $result->id }}</span></td>
-                            <td><span>{{ $result->name }}</span></td>
-                            <td><span>{{ $result->email }}</span></td>
-                            <td><span>{{ ucfirst($result->role) }}</span></td>
+                            <td>
+                                <a href="{{ route('admin.domains.show', $result->domain_id) }}">
+                                    <span>{{ $result->name }}</span>
+                                </a>
+                            </td>
+                            <td><span>{{ $result->sender_name }}</span></td>
+                            <td><span>{{ $result->sender_email }}</span></td>
                             <td>
                                 <span>
                                     {{ \App\Facades\General::dateFormat($result->created_at) }}
@@ -27,7 +31,7 @@
                             </td>
                             <td>
                                 <div class="text-end">
-                                    @include('actions.index', ['module' => 'users', 'id' => $result->id])
+                                    @include('actions.index', ['module' => 'emails', 'id' => $result->id])
                                 </div>
                             </td>
                         </tr>

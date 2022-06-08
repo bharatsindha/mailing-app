@@ -1,6 +1,6 @@
 @extends('layouts.admin.main')
 
-@section('title', 'Domains')
+@section('title', 'Emails')
 
 @section('stylesheets')
     @parent
@@ -9,14 +9,14 @@
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
-            <h2 class="h4">{{ __('Domains') }}</h2>
-            @include('layouts.admin.breadcrumb', ['module' => 'Domains'])
+            <h2 class="h4">{{ __('Emails') }}</h2>
+            @include('layouts.admin.breadcrumb', ['module' => 'Emails'])
         </div>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="{{ route('admin.domains.create') }}"
+            <a href="{{ route('admin.emails.create') }}"
                class="btn btn-sm btn-secondary d-inline-flex align-items-center">
                 @include('icons.add')
-                {{ __('New Domain') }}</a>
+                {{ __('New Email') }}</a>
         </div>
     </div>
     <div class="table-settings mb-4">
@@ -28,7 +28,7 @@
                     <span class="input-group-text">
                         @include('icons.search')
                     </span>
-                        <input type="text" name="q" id="q" class="form-control" placeholder="Search domains"
+                        <input type="text" name="q" id="q" class="form-control" placeholder="Search emails"
                                autocomplete="off">
                     </div>
                     <div class="input-group">

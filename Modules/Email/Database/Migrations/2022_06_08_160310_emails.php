@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,12 +13,11 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('domains', function (Blueprint $table) {
+        Schema::create('emails', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('url')->unique();
-            $table->string('client_id');
-            $table->string('client_secret');
+            $table->integer('domain_id');
+            $table->string('sender_name');
+            $table->string('sender_email')->unique();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +30,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('domains');
+        Schema::dropIfExists('emails');
     }
 };

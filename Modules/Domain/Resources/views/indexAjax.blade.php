@@ -7,8 +7,8 @@
                     <tr>
                         <th class="border-0 rounded-start">{{ __('#') }}</th>
                         <th class="border-0">{{ __('Name') }}</th>
-                        <th class="border-0">{{ __('Email') }}</th>
-                        <th class="border-0">{{ __('Role') }}</th>
+                        <th class="border-0">{{ __('Url') }}</th>
+                        <th class="border-0">{{ __('Client ID') }}</th>
                         <th class="border-0">{{ __('Created At') }}</th>
                         <th class="border-0 rounded-end text-end">{{ __('Action') }}</th>
                     </tr>
@@ -18,8 +18,8 @@
                         <tr>
                             <td><span class="font-weight-bold">{{ $result->id }}</span></td>
                             <td><span>{{ $result->name }}</span></td>
-                            <td><span>{{ $result->email }}</span></td>
-                            <td><span>{{ ucfirst($result->role) }}</span></td>
+                            <td><span>{{ $result->url }}</span></td>
+                            <td><span>{{ ucfirst($result->client_id) }}</span></td>
                             <td>
                                 <span>
                                     {{ \App\Facades\General::dateFormat($result->created_at) }}
@@ -27,7 +27,7 @@
                             </td>
                             <td>
                                 <div class="text-end">
-                                    @include('actions.index', ['module' => 'users', 'id' => $result->id])
+                                    @include('actions.index', ['module' => 'domains', 'id' => $result->id])
                                 </div>
                             </td>
                         </tr>
