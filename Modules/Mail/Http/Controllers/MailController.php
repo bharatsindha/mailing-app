@@ -5,6 +5,11 @@ namespace Modules\Mail\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Modules\Domain\Entities\Domain;
+use Modules\Mail\Entities\Attachment;
+use Modules\Mail\Http\Requests\StoreComposeRequest;
 
 class MailController extends Controller
 {
@@ -14,66 +19,22 @@ class MailController extends Controller
      */
     public function index()
     {
-        return view('mail::index');
+//        dd((string) Str::uuid());
+
+//        dd(storage_path(Attachment::ATTACHMENT_PATH) . '/logo.png');
+
+//        dd(Storage::get(storage_path(Attachment::ATTACHMENT_PATH) . '/logo.png'));
+
+        $domains = Domain::getDomainOptions();
+        return view('mail::index', compact('domains'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     * @return Renderable
+     * @param StoreComposeRequest $request
      */
-    public function create()
+    public function store(StoreComposeRequest $request)
     {
-        return view('mail::create');
+        dd($request->all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('mail::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('mail::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

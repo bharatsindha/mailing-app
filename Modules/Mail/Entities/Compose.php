@@ -3,6 +3,7 @@
 namespace Modules\Mail\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Compose extends Model
@@ -22,4 +23,13 @@ class Compose extends Model
         'project', 'status'
     ];
 
+    /**
+     * Get the session of compose
+     *
+     * @return BelongsTo
+     */
+    public function session()
+    {
+        return $this->belongsTo(Session::class);
+    }
 }

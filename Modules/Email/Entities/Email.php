@@ -4,6 +4,7 @@ namespace Modules\Email\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Domain\Entities\Domain;
 
 class Email extends Model
 {
@@ -15,6 +16,14 @@ class Email extends Model
     protected $fillable = [
         'domain_id', 'sender_name', 'sender_email'
     ];
+
+    /**
+     * Get the domain that owns the sender emails.
+     */
+    public function domain()
+    {
+        return $this->belongsTo(Domain::class);
+    }
 
     /**
      * Return all users
@@ -35,5 +44,4 @@ class Email extends Model
             })
             ->orderBy('id', 'desc');
     }
-
 }

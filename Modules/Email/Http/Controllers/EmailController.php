@@ -5,7 +5,9 @@ namespace Modules\Email\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Domain\Entities\Domain;
 use Modules\Email\Entities\Email;
@@ -118,6 +120,24 @@ class EmailController extends Controller
         } catch (Throwable $e) {
             return redirect()->back()
                 ->with('alert-danger', 'Failed to delete email. Error: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Return the sender emails by domain
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getSenderEmailsByDomain(Request $request)
+    {
+        try {
+            if (empty($request->domainId) || is_null($request->domainId))
+                return response()->json(__('Domain Id is required.'), 500);
+
+            return response()->json(['senderEmails' => Domain::getSenderEmailsByDomain($request->domainId)]);
+        } catch (Throwable $e) {
+            return response()->json($e->getMessage(), 500);
         }
     }
 }

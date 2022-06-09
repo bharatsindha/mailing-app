@@ -14,10 +14,10 @@ return new class extends Migration {
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->id();
+            $table->integer('domain_id');
             $table->integer('email_id');
             $table->integer('user_id');
             $table->string('session_id', 50);
-            $table->string('list_name');
             $table->string('subject');
             $table->text('mail_content');
             $table->integer('total_emails')->default(0);

@@ -4,6 +4,7 @@ namespace Modules\Domain\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Modules\Email\Entities\Email;
 
 class Domain extends Model
 {
@@ -46,4 +47,22 @@ class Domain extends Model
         return self::select(['id', 'name', 'url'])->orderBy('name', 'asc')->get()->toArray();
     }
 
+    /**
+     * Get the sender emails by domain
+     *
+     * @param $domainId
+     * @return mixed
+     */
+    public static function getSenderEmailsByDomain($domainId)
+    {
+        return self::find($domainId)->senderEmails()->get()->toArray();
+    }
+
+    /**
+     * Get the sender emails for the domain.
+     */
+    public function senderEmails()
+    {
+        return $this->hasMany(Email::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace Modules\Mail\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Session extends Model
@@ -17,8 +18,27 @@ class Session extends Model
      * @var array
      */
     protected $fillable = [
-        'email_id', 'user_id', 'session_id', 'list_name', 'subject', 'mail_content', 'total_emails',
+        'email_id', 'user_id', 'session_id', 'subject', 'mail_content', 'total_emails',
         'total_sent', 'total_opened', 'total_bounced', 'is_completed'
     ];
 
+    /**
+     * Get the attachments for the session
+     *
+     * @return HasMany
+     */
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }
+
+    /**
+     * Get the composes for the session
+     *
+     * @return HasMany
+     */
+    public function composes()
+    {
+        return $this->hasMany(Compose::class);
+    }
 }

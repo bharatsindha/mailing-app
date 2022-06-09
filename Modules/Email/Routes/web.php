@@ -13,6 +13,10 @@
 
 use Modules\Email\Http\Controllers\EmailController;
 
+Route::prefix('emails')->middleware(['auth'])->name('admin.')->group(function () {
+    Route::get('getSenderEmailsByDomain', 'EmailController@getSenderEmailsByDomain')->name('emails.gsebd');
+});
+
 Route::middleware(['auth', 'check.role.web:admin'])->name('admin.')->group(function () {
     Route::resource('emails', EmailController::class);
 });

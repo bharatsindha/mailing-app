@@ -55,10 +55,39 @@
                     <span class="sidebar-icon">
                         @include('icons.users')
                     </span>
-                    <span class="sidebar-text">Emails</span>
+                    <span class="sidebar-text">Sender Emails</span>
                 </a>
             </li>
 
+            <li class="nav-item">
+                {{--collapsed, aria-expanded="true", show --}}
+                <span
+                    class="nav-link d-flex justify-content-between align-items-center {{ !(request()->is('mail/*') ) ? 'collapsed' : '' }}"
+                    data-bs-toggle="collapse" data-bs-target="#submenu-pages"
+                    aria-expanded="{{ (request()->is('mail/*') ) ? 'true' : 'false' }}">
+                    <span>
+                        <span class="sidebar-icon">
+                            @include('icons.users')
+                        </span>
+                        <span class="sidebar-text">Start Mail</span>
+                    </span>
+                    <span class="link-arrow">
+                        @include('icons.arrow')
+                    </span>
+                </span>
+                <div
+                    class="multi-level collapse {{ (request()->is('mail/*') ) ? 'show' : '' }}"
+                    role="list" id="submenu-pages" aria-expanded="{{ (request()->is('mail/*') ) ? 'true' : 'false' }}">
+                    <ul class="flex-column nav">
+                        <li class="nav-item {{ (request()->is('*/compose') || request()->is('*/compose/*')) ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('admin.compose.index') }}">
+                                <span class="sidebar-text-contracted">C</span>
+                                <span class="sidebar-text">Compose</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             <li class="nav-item {{ (request()->is('users') || request()->is('users/*')) ? 'active' : '' }}">
                 <a href="{{ route('admin.users.index') }}" class="nav-link">
                     <span class="sidebar-icon">

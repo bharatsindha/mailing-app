@@ -8,6 +8,9 @@
     @if(isset($save) && $save)
         <button class="btn btn-secondary animate-up-2" type="submit">{{ __('Save') }}</button>
     @endif
+    @if(isset($send) && $send)
+        <button class="btn btn-secondary animate-up-2" type="submit">{{ __('Send') }}</button>
+    @endif
     @if(isset($update) && $update)
         <button class="btn btn-secondary animate-up-2" type="submit">{{ __('Update') }}</button>
     @endif

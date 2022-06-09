@@ -5,6 +5,8 @@
     <title>@yield('title'){{ ' | ' . env('APP_NAME') }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 @section('stylesheets')
     <!-- Sweet Alert -->
         <link type="text/css" href="{{ asset('admin_template/vendor/sweetalert2/dist/sweetalert2.min.css') }}"
