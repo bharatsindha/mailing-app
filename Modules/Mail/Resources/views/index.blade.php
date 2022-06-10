@@ -39,20 +39,77 @@
             <div class="col-3 col-lg-4 d-flex justify-content-end"></div>
         </div>
     </div>
-    <input type="hidden" name="current_session_id" id="current_session_id" value="">
-    <input type="hidden" name="current_sender_email" id="current_sender_email" value="">
+    <input type="hidden" name="currentSessionId" id="currentSessionId" value="">
+    <input type="hidden" name="currentSenderEmail" id="currentSenderEmail" value="">
+    <input type="hidden" name="currentDomainId" id="currentDomainId" value="">
     <div class="ajax-content"></div>
 @endsection
 
 @section('scripts')
     @parent
     <script>
-        function checkGmail(session_id, sender_email) {
-            $("#current_session_id").val(session_id);
-            $("#current_sender_email").val(sender_email);
-            PopupCenterDual("{{ route('gmail.connection') }}", 'Gmail login page', '450', '450');
+
+        /**
+         * Set cookie
+         *
+         * @param cookieName
+         * @param cookieValue
+         * @param expireDays
+         */
+        function setCookie(cookieName, cookieValue, expireDays) {
+            let d = new Date();
+            d.setTime(d.getTime() + (expireDays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
         }
 
+        /**
+         * Get Cookie
+         *
+         * @param cookieName
+         * @returns {string}
+         */
+        function getCookie(cookieName) {
+            let name = cookieName + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) === 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        /**
+         * Check connection with GMail
+         *
+         * @param sessionId
+         * @param senderEmail
+         * @param domainId
+         */
+        function checkGmail(sessionId, senderEmail, domainId) {
+            $("#currentSessionId").val(sessionId);
+            $("#currentSenderEmail").val(senderEmail);
+            $("#currentDomainId").val(domainId);
+
+            setCookie("tempDomainId", domainId, 1);
+            PopupCenterDual("{{ route('admin.mail.connection') }}", 'GMail login page', '450', '450');
+        }
+
+        /**
+         * Open popup to connect to GMail
+         *
+         * @param url
+         * @param title
+         * @param w
+         * @param h
+         * @constructor
+         */
         function PopupCenterDual(url, title, w, h) {
             // Fixes dual-screen position Most browsers Firefox
             let dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : screen.left;

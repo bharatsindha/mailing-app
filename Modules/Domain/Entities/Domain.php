@@ -59,6 +59,17 @@ class Domain extends Model
     }
 
     /**
+     * Get domain credential
+     *
+     * @param $domainId
+     * @return mixed
+     */
+    public static function getDomainCredential($domainId)
+    {
+        return self::select('client_id', 'client_secret')->find($domainId)->toArray();
+    }
+
+    /**
      * Get the sender emails for the domain.
      */
     public function senderEmails()

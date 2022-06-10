@@ -11,15 +11,19 @@
 |
 */
 
-use Modules\Mail\Http\Controllers\MailController;
+use Modules\Mail\Http\Controllers\DraftController;
 
 Route::prefix('mail')->middleware(['auth', 'check.role.web:admin'])->name('admin.')->group(function () {
-    Route::resource('drafts', MailController::class);
+    Route::resource('drafts', DraftController::class);
     Route::post('uploadAttachment', 'AttachmentController@uploadAttachment')->name('draft.uploadAttachment');
     Route::post('removeAttachment', 'AttachmentController@removeAttachment')->name('draft.removeAttachment');
 
     Route::get('connection', 'MailingController@connection')->name('mail.connection');
-    Route::get('re-connect', 'MailingController@reConnectGmail')->name('mail.re-connect');
+    Route::get('reConnect', 'MailingController@reConnectGMail')->name('mail.reConnect');
+
+    Route::get('send/{session}', 'MailingController@startMailing')->name('mail.startMailing');
+    Route::post('getEmail/{session}', 'MailingController@getEmail')->name('mail.getEmail');
+    Route::post('sendEmail/{session}', 'MailingController@sendEmail')->name('mail.sendEmail');
 });
 
-Route::get('email/img/{compose}', 'MailingController@emailUnsubscribe')->name('openTrack.img');
+Route::get('email/img/{compose}', 'MailingController@emailOpenTrack')->name('openTrack.img');

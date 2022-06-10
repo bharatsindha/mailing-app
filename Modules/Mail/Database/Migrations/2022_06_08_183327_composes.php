@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -26,6 +25,7 @@ return new class extends Migration
             $table->string('company_name', 50)->nullable();
             $table->tinyInteger('status')->default(0)
                 ->comment('0-not sent, 1-sent, 2-opened, 3-bounced');
+            $table->dateTime('send_date')->nullable();
             $table->timestamps();
 //            $table->softDeletes();
         });

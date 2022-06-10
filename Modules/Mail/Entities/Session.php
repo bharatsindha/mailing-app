@@ -3,7 +3,9 @@
 namespace Modules\Mail\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Domain\Entities\Domain;
 use Modules\Email\Entities\Email;
@@ -42,13 +44,12 @@ class Session extends Model
      *
      * @return mixed
      */
-    public static function getAllSessions()
+    public static function getAllDraftSessions()
     {
-
-
         return self::select(['sessions.*', 'domains.name', 'emails.sender_email'])
             ->join((new Domain())->getTable(), 'sessions.domain_id', (new Domain())->getTable() . '.id')
             ->join((new Email())->getTable(), 'sessions.email_id', (new Email())->getTable() . '.id')
+            ->whereIn('sessions.is_completed', [self::YET_TO_START, self::IN_PROCESS])
             ->when(request()->filled('q'), function ($q) {
                 $keyword = request()->input('q');
                 $q->where(function ($query) use ($keyword) {
@@ -60,6 +61,17 @@ class Session extends Model
             })
             ->groupBy('sessions.id')
             ->orderBy('sessions.id', 'desc');
+    }
+
+    /**
+     * Get pending session data
+     *
+     * @param $sessionId
+     * @return array
+     */
+    public static function getPendingSessionData($sessionId)
+    {
+        return self::with('composesPending')->find($sessionId)->toArray();
     }
 
     /**
@@ -80,5 +92,59 @@ class Session extends Model
     public function composes()
     {
         return $this->hasMany(Compose::class);
+    }
+
+    /**
+     * Has many relation with composes
+     *
+     * @return HasMany
+     */
+    public function composesSent()
+    {
+        return $this->hasMany(Compose::class)->where('status', Compose::SENT);
+    }
+
+    /**
+     * Has many relation with composes
+     *
+     * @return HasMany
+     */
+    public function composesOpened()
+    {
+        return $this->hasMany(Compose::class)->where('status', Compose::OPENED);
+    }
+
+    /**
+     * Has many relation with composes
+     *
+     * @return HasMany
+     */
+    public function composesBounced()
+    {
+        return $this->hasMany(Compose::class)->where('status', Compose::BOUNCED);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function composesPending()
+    {
+        return $this->hasOne(Compose::class)->where('status', Compose::NOT_SENT);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function domain()
+    {
+        return $this->belongsTo(Domain::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function email()
+    {
+        return $this->belongsTo(Email::class);
     }
 }

@@ -43,7 +43,7 @@
                                         <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1"
                                              style="">
                                             <a class="dropdown-item d-flex align-items-center"
-                                               onclick="checkGmail('{{ $result->id }}', '{{ $result->sender_email }}');">
+                                               onclick="checkGmail('{{ $result->id }}', '{{ $result->sender_email }}', '{{ $result->domain_id }}');">
                                                 @include('icons.edit')
                                                 Start Email
                                             </a>

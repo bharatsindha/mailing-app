@@ -4,7 +4,10 @@ namespace Modules\Mail\Http\Controllers;
 
 use App\Imports\ComposeImport;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Domain\Entities\Domain;
@@ -12,19 +15,25 @@ use Modules\Mail\Entities\Session;
 use Modules\Mail\Http\Requests\StoreComposeRequest;
 use Throwable;
 
-class MailController extends Controller
+class DraftController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * @return Renderable
+     *
+     * @param Request $request
+     * @return Factory|View
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (isset($request->logout)) {
+            \Illuminate\Support\Facades\Session::forget('access_token');
+        }
+
         if (!(request()->ajax())) {
             return view('mail::index');
         }
 
-        $results = Session::getAllSessions()->paginate(15);
+        $results = Session::getAllDraftSessions()->paginate(15);
 
         return view('mail::indexAjax', compact('results'));
     }
