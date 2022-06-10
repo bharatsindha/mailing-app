@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Modules\Domain\Entities\Domain;
+use Modules\Mail\Entities\Session;
 use Modules\Mail\Http\Requests\StoreComposeRequest;
 use Throwable;
 
@@ -19,7 +20,13 @@ class MailController extends Controller
      */
     public function index()
     {
-        return view('mail::index');
+        if (!(request()->ajax())) {
+            return view('mail::index');
+        }
+
+        $results = Session::getAllSessions()->paginate(15);
+
+        return view('mail::indexAjax', compact('results'));
     }
 
     /**
@@ -59,6 +66,26 @@ class MailController extends Controller
                 ->with('alert-danger', 'Something went wrong. Error: ' . $e->getMessage());
         }
 
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function destroy($id)
+    {
+        try {
+            $session = Session::find($id);
+            $session->delete();
+
+            return redirect()->route('admin.drafts.index')
+                ->with('alert-success', 'Draft deleted successfully.');
+        } catch (Throwable $e) {
+            return redirect()->back()
+                ->with('alert-danger', 'Failed to delete draft. Error: ' . $e->getMessage());
+        }
     }
 
 }

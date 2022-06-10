@@ -28,7 +28,7 @@
                     <span class="input-group-text">
                         @include('icons.search')
                     </span>
-                        <input type="text" name="q" id="q" class="form-control" placeholder="Search emails"
+                        <input type="text" name="q" id="q" class="form-control" placeholder="Search Drafts"
                                autocomplete="off">
                     </div>
                     <div class="input-group">
@@ -39,11 +39,43 @@
             <div class="col-3 col-lg-4 d-flex justify-content-end"></div>
         </div>
     </div>
-{{--    <div class="ajax-content"></div>--}}
+    <input type="hidden" name="current_session_id" id="current_session_id" value="">
+    <input type="hidden" name="current_sender_email" id="current_sender_email" value="">
+    <div class="ajax-content"></div>
 @endsection
 
 @section('scripts')
     @parent
+    <script>
+        function checkGmail(session_id, sender_email) {
+            $("#current_session_id").val(session_id);
+            $("#current_sender_email").val(sender_email);
+            PopupCenterDual("{{ route('gmail.connection') }}", 'Gmail login page', '450', '450');
+        }
+
+        function PopupCenterDual(url, title, w, h) {
+            // Fixes dual-screen position Most browsers Firefox
+            let dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : screen.left;
+            let dualScreenTop = window.screenTop !== undefined ? window.screenTop : screen.top;
+            let width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ?
+                document.documentElement.clientWidth : screen.width;
+            let height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ?
+                document.documentElement.clientHeight : screen.height;
+
+            let left = ((width / 2) - (w / 2)) + dualScreenLeft;
+            let top = ((height / 2) - (h / 2)) + dualScreenTop;
+            let newWindow = window.open(url, title,
+                'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+            if (newWindow == null || typeof (newWindow) == 'undefined') {
+                alert("Popup Blocker is not enabled! Please add this site to your exception list.");
+            } else {
+                if (window.focus) {
+                    newWindow.focus();
+                }
+            }
+        }
+    </script>
+
     <script>
         function get_data_ajax() {
             let form = $('form#get_data');
@@ -88,4 +120,5 @@
         });
 
     </script>
+
 @endsection

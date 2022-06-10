@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Attachment extends Model
 {
-    use SoftDeletes;
+//    use SoftDeletes;
 
     const ATTACHMENT_PATH = 'attachments';
 

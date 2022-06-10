@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Compose extends Model
 {
-    use SoftDeletes;
+//    use SoftDeletes;
 
     const NOT_SENT = 0;
     const SENT = 1;

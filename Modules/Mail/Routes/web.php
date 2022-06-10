@@ -14,11 +14,12 @@
 use Modules\Mail\Http\Controllers\MailController;
 
 Route::prefix('mail')->middleware(['auth', 'check.role.web:admin'])->name('admin.')->group(function () {
-//    Route::get('compose', 'MailController@index')->name('compose.index');
-//    Route::post('compose', 'MailController@store')->name('compose.store');
-
     Route::resource('drafts', MailController::class);
-
     Route::post('uploadAttachment', 'AttachmentController@uploadAttachment')->name('draft.uploadAttachment');
     Route::post('removeAttachment', 'AttachmentController@removeAttachment')->name('draft.removeAttachment');
+
+    Route::get('connection', 'MailingController@connection')->name('mail.connection');
+    Route::get('re-connect', 'MailingController@reConnectGmail')->name('mail.re-connect');
 });
+
+Route::get('email/img/{compose}', 'MailingController@emailUnsubscribe')->name('openTrack.img');

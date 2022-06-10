@@ -27,7 +27,7 @@ return new class extends Migration {
             $table->tinyInteger('is_completed')->default(0)
                 ->comment('0-yet to start, 1-in process, 2-completed');
             $table->timestamps();
-            $table->softDeletes();
+//            $table->softDeletes();
         });
     }
 

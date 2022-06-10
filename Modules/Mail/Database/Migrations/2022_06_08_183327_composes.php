@@ -27,7 +27,7 @@ return new class extends Migration
             $table->tinyInteger('status')->default(0)
                 ->comment('0-not sent, 1-sent, 2-opened, 3-bounced');
             $table->timestamps();
-            $table->softDeletes();
+//            $table->softDeletes();
         });
     }
 
