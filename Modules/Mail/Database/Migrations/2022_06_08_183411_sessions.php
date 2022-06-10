@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->integer('domain_id');
             $table->integer('email_id');
             $table->integer('user_id');
-            $table->string('session_id', 50);
+//            $table->string('session_id', 50);
             $table->string('subject');
             $table->text('mail_content');
             $table->integer('total_emails')->default(0);

@@ -7,8 +7,7 @@
                 required>
             <option value="" selected="selected">{{ __('Select Domain') }}</option>
             @foreach($domains as $key => $domain)
-                <option value="{{ $domain['id'] }}"
-                    {{ (old('domain_id') == $domain['id']) ? 'selected' : '' }}>
+                <option value="{{ $domain['id'] }}">
                     {{ $domain['name'] . ' (' . $domain['url'] . ')' }}
                 </option>
             @endforeach

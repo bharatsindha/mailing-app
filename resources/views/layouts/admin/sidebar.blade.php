@@ -79,10 +79,10 @@
                     class="multi-level collapse {{ (request()->is('mail/*') ) ? 'show' : '' }}"
                     role="list" id="submenu-pages" aria-expanded="{{ (request()->is('mail/*') ) ? 'true' : 'false' }}">
                     <ul class="flex-column nav">
-                        <li class="nav-item {{ (request()->is('*/compose') || request()->is('*/compose/*')) ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('admin.compose.index') }}">
-                                <span class="sidebar-text-contracted">C</span>
-                                <span class="sidebar-text">Compose</span>
+                        <li class="nav-item {{ (request()->is('*/drafts') || request()->is('*/drafts/*')) ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('admin.drafts.index') }}">
+                                <span class="sidebar-text-contracted">D</span>
+                                <span class="sidebar-text">Drafts</span>
                             </a>
                         </li>
                     </ul>

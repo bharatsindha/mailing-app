@@ -18,7 +18,7 @@ class Session extends Model
      * @var array
      */
     protected $fillable = [
-        'email_id', 'user_id', 'session_id', 'subject', 'mail_content', 'total_emails',
+        'domain_id', 'email_id', 'user_id', 'subject', 'mail_content', 'total_emails',
         'total_sent', 'total_opened', 'total_bounced', 'is_completed'
     ];
 

@@ -16,13 +16,14 @@ return new class extends Migration
         Schema::create('composes', function (Blueprint $table) {
             $table->id();
             $table->string('session_id', 50);
-            $table->string('receiver_email', 50);
             $table->string('first_name', 25);
-            $table->string('last_name', 25);
-            $table->string('designation', 50);
-            $table->string('company', 50);
-            $table->string('curl', 50);
-            $table->string('project', 100);
+            $table->string('last_name', 25)->nullable();
+            $table->string('to', 50);
+            $table->string('cc', 50)->nullable();
+            $table->string('bcc', 50)->nullable();
+            $table->string('designation', 50)->nullable();
+            $table->string('project_name', 100)->nullable();
+            $table->string('company_name', 50)->nullable();
             $table->tinyInteger('status')->default(0)
                 ->comment('0-not sent, 1-sent, 2-opened, 3-bounced');
             $table->timestamps();

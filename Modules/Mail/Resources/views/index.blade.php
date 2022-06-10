@@ -1,165 +1,91 @@
 @extends('layouts.admin.main')
 
-@section('title', 'Compose')
+@section('title', 'Drafts')
 
 @section('stylesheets')
     @parent
-    <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css"/>
 @endsection
 
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
-            <h2 class="h4">{{ __('Compose') }}</h2>
-            @include('layouts.admin.breadcrumb', ['module' => 'Compose'])
+            <h2 class="h4">{{ __('Drafts') }}</h2>
+            @include('layouts.admin.breadcrumb', ['module' => 'Drafts'])
+        </div>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{{ route('admin.drafts.create') }}"
+               class="btn btn-sm btn-secondary d-inline-flex align-items-center">
+                @include('icons.add')
+                {{ __('New Draft') }}</a>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-12 col-xl-8">
-            <div class="card card-body border-0 shadow mb-4">
-                <form method="POST" action="{{ route('admin.compose.store') }}" id="composeForm"
-                      enctype="multipart/form-data">
+    <div class="table-settings mb-4">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-9 col-lg-8 d-md-flex">
+                <form action="{{ url()->full() }}" method="get" id="get_data">
                     @csrf
-                    @include('mail::form')
-                    @include('actions.form_actions', ['send' => true])
+                    <div class="input-group me-2 me-lg-3 fmxw-300">
+                    <span class="input-group-text">
+                        @include('icons.search')
+                    </span>
+                        <input type="text" name="q" id="q" class="form-control" placeholder="Search emails"
+                               autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <input type="hidden" name="page" id="page" class="form-control">
+                    </div>
                 </form>
             </div>
+            <div class="col-3 col-lg-4 d-flex justify-content-end"></div>
         </div>
-        <div class="col-12 col-xl-4"></div>
     </div>
+{{--    <div class="ajax-content"></div>--}}
 @endsection
 
 @section('scripts')
     @parent
-
-    <script src="{{ asset('admin_template/vendor/ckeditor/ckeditor.js') }}"></script>
-    <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
     <script>
+        function get_data_ajax() {
+            let form = $('form#get_data');
 
-        // Replace the <textarea id="editor1"> with a CKEditor 4
-        // instance, using default configuration.
-        CKEDITOR.replace('mail_content');
-
-        let attachments = [];
-
-        let myDropzone = new Dropzone("div#dAttachment", {
-            url: "{{ route('admin.compose.uploadAttachment') }}",
-            addRemoveLinks: true,
-            maxFilesize: 10,
-            // dictDefaultMessage: '<span class="text-center">' +
-            //     '<span class="font-lg visible-xs-block visible-sm-block visible-lg-block">' +
-            //     '<span class="font-lg">' +
-            //     '<i class="fa fa-caret-right text-danger"></i> Drop files ' +
-            //     '<span class="font-xs">to upload</span>' +
-            //     '</span>' +
-            //     '<span>&nbsp&nbsp<h4 class="display-inline"> (Or Click)</h4>' +
-            //     '</span>',
-            // dictResponseError: 'Error uploading file!',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            removedfile: function (file) {
-
-                let fileIndex = attachments.findIndex((attachment) => {
-                    return (attachment.filename_origin.trim() === file.upload.filename.trim())
-                });
-
-                let fileData = attachments[fileIndex];
-
-                attachments.splice(fileIndex, 1);
-
-                syncAttachmentWithForm();
-
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('admin.compose.removeAttachment') }}',
-                    data: {"_token": "{{ csrf_token() }}", fileData},
-                    success: function (data) {
-                    },
-                    error: function (e) {
-                        console.log(e);
-                    }
-                });
-                let fileRef;
-                return (fileRef = file.previewElement) != null ?
-                    fileRef.parentNode.removeChild(file.previewElement) : void 0;
-            },
-            success: function (file, response) {
-                attachments.push(response);
-                syncAttachmentWithForm();
-            },
-        });
-
-        /**
-         * Sync the attachment into form
-         **/
-        function syncAttachmentWithForm() {
-            $("input[type='hidden'][name='attachments[]']").remove();
-            let $element = $("#composeForm");
-            $.each(attachments, function (key, attachment) {
-                let inputEl = document.createElement("input");
-                inputEl.setAttribute("type", "hidden");
-                inputEl.setAttribute("name", "attachments[]");
-                inputEl.setAttribute("value", JSON.stringify(attachment));
-                //append to form element that you want .
-                $element.append(inputEl);
-            })
+            console.log("working here");
+            $.ajax({
+                type: form.attr('method'),
+                url: form.attr('action'),
+                data: $('form#get_data').serialize(),
+                success: function (data) {
+                    $('.ajax-content').html(data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('Error in fetching data. Please try again.');
+                }
+            });
         }
 
-        /**
-         * On changing the domain, append the sender emails of the domain
-         **/
-        $(document).on('change', ".on-change-domain", function (event) {
-            if (event.target.value && event.target.value > 0) {
-                $.ajax({
-                    url: '{{ route('admin.emails.gsebd') }}',
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    type: 'get',
-                    data: {
-                        domainId: event.target.value
-                    },
-                    success: function (data) {
-                        if (!data.senderEmails?.length) {
-                            notyf.open({
-                                type: 'danger',
-                                message: 'Sender email is not yet added for this domain.'
-                            });
-                        }
-
-                        let $element = initializeEmailOption();
-
-                        if (data.senderEmails) {
-                            $.each(data.senderEmails, function (key, email) {
-                                // Create the DOM option
-                                let text = email.sender_email + ' (' + email.sender_name + ')';
-                                let option = new Option(text, email.id, false, false);
-                                // Append it to the select
-                                $element.append(option);
-                            })
-                        }
-                    },
-                    error: function (jqXHR, exception) {
-                        notyf.open({type: 'danger', message: jqXHR.responseJSON ?? jqXHR.statusText});
-                    }
-                });
-            } else {
-                initializeEmailOption();
-            }
+        $(document).on('submit', 'form#get_data', function (event) {
+            event.preventDefault();
+            get_data_ajax();
         });
 
-        /**
-         * Initialize the email option
-         *
-         * @returns {void | * | jQuery | HTMLElement}
-         */
-        function initializeEmailOption() {
-            let $element = $("#email_id").empty();
-            $element.append(
-                new Option("{{ __('Select Sender Email') }}", '', true, true)
-            );
+        $(document).on('click', '.pagination>li>a', function (event) {
+            event.preventDefault();
+            $('#page').val($(this).text());
+            get_data_ajax();
+        });
 
-            return $element;
-        }
+        $(document).ready(function () {
+            $('form#get_data').submit();
+        });
+
+        let typingTimer;
+
+        $('#q').keyup(function () {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(function () {
+                $('#page').val('1');
+                get_data_ajax();
+            }, 1000);
+        });
+
     </script>
 @endsection
