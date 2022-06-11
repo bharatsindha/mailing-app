@@ -26,26 +26,27 @@
         </div>
         <ul class="nav flex-column pt-3 pt-md-0">
             <li class="nav-item">
-                <a href="#" class="nav-link d-flex align-items-center">
+                <a href="{{ route('home') }}" class="nav-link d-flex align-items-center">
                     <span class="sidebar-icon">
-                    <img src="{{ asset('img/logo.png') }}" height="20" width="20"
-                         alt="Volt Logo">
+                    {{--<img src="{{ asset('img/logo.png') }}" height="20" width="20"
+                         alt="Volt Logo">--}}
+                        <i class="fa-solid fa-envelope"></i>
                     </span>
-                    <span class="mt-1 ms-1 sidebar-text">{{ strtoupper(env('APP_NAME') )  }}</span>
+                    <span class="mt-1 ms-1 sidebar-text">{{ strtoupper(env('APP_NAME'))  }}</span>
                 </a>
             </li>
-            <li class="nav-item  {{ (request()->is('dashboard') || request()->is('dashboard/*')) ? 'active' : '' }}">
+            {{--<li class="nav-item  {{ (request()->is('dashboard') || request()->is('dashboard/*')) ? 'active' : '' }}">
                 <a href="{{ route('admin.dashboard') }}" class="nav-link">
                     <span class="sidebar-icon">
                         @include('icons.dashboard')
                     </span>
                     <span class="sidebar-text">Dashboard</span>
                 </a>
-            </li>
+            </li>--}}
             <li class="nav-item {{ (request()->is('domains') || request()->is('domains/*')) ? 'active' : '' }}">
                 <a href="{{ route('admin.domains.index') }}" class="nav-link">
                     <span class="sidebar-icon">
-                        @include('icons.users')
+                        @include('icons.dashboard')
                     </span>
                     <span class="sidebar-text">Domains</span>
                 </a>
@@ -53,7 +54,8 @@
             <li class="nav-item {{ (request()->is('emails') || request()->is('emails/*')) ? 'active' : '' }}">
                 <a href="{{ route('admin.emails.index') }}" class="nav-link">
                     <span class="sidebar-icon">
-                        @include('icons.users')
+{{--                        @include('icons.users')--}}
+                        <i class="fa-solid fa-at"></i>
                     </span>
                     <span class="sidebar-text">Sender Emails</span>
                 </a>
@@ -67,7 +69,7 @@
                     aria-expanded="{{ (request()->is('mail/*') ) ? 'true' : 'false' }}">
                     <span>
                         <span class="sidebar-icon">
-                            @include('icons.users')
+                            <i class="fa-solid fa-paper-plane"></i>
                         </span>
                         <span class="sidebar-text">Start Mail</span>
                     </span>
@@ -83,6 +85,12 @@
                             <a class="nav-link" href="{{ route('admin.drafts.index') }}">
                                 <span class="sidebar-text-contracted">D</span>
                                 <span class="sidebar-text">Drafts</span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{ (request()->is('*/sentReport') || request()->is('*/sentReport/*')) ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('admin.mail.sentReport') }}">
+                                <span class="sidebar-text-contracted">S</span>
+                                <span class="sidebar-text">Sent Report</span>
                             </a>
                         </li>
                     </ul>

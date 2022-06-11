@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Redirect;
 use Modules\Domain\Entities\Domain;
 use Modules\Mail\Entities\Compose;
 use Modules\Mail\Entities\Session;
+use Modules\Mail\Http\Response\TransparentPixelResponse;
 use Throwable;
 
 class MailingController extends Controller
@@ -159,7 +160,8 @@ class MailingController extends Controller
             <img src="' . route('unsubscribe.img', ['person' => $personId, 'compose' => $composeId]) . '"
             alt="unsubscribe">', $strMailContent);*/
 
-//        $openTrackContent = '<img src="' . route('openTrack.img', $composeId) . '" alt="unsubscribe">';
+//        $strMailContent .= '<img src="' . route('openTrack.img', $composeId) . '" alt="unsubscribe">';
+        $strMailContent .= '<img src="http://1bc6-2409-4041-e9c-528c-de6b-5b85-a504-1733.in.ngrok.io/mail/img/' . $composeId . '" alt="unsubscribe">';
 
         $strSubject = $subject;
         $strSubject = str_replace("{{firstName}}", $receiverFirstName, $strSubject);
@@ -219,15 +221,12 @@ class MailingController extends Controller
 
         $strRawMessage .= '--' . $boundary . "--\r\n";
 
-//        dd($strRawMessage);
-
         try {
             $mime = rtrim(strtr(base64_encode($strRawMessage), '+/', '-_'), '=');
             $msg = new Google_Service_Gmail_Message();
             $msg->setRaw($mime);
             $message = $gmail->users_messages->send('me', $msg);
 
-//            dd("send");
             if ($message->getId()) {
                 $compose = Compose::find($composeId);
                 $compose->status = Compose::SENT;
@@ -247,12 +246,25 @@ class MailingController extends Controller
     }
     }
 
-    public function emailOpenTrack(Compose $compose)
+    /**
+     * Email open tracking
+     *
+     * @param $composeId
+     * @return TransparentPixelResponse
+     */
+    public function emailOpenTrack($composeId)
     {
-        $compose->status = Compose::OPENED;
-        $compose->save();
+        if ($composeId > 0) {
+            $compose = Compose::find($composeId);
 
-        //ToDo: add logic to redirect to image
+            if (!is_null($compose)) {
+                $compose->status = Compose::OPENED;
+                $compose->save();
+            }
+        }
+
+//        return Redirect::to(asset('img/ajax-loader.gif'));
+        return new TransparentPixelResponse();
     }
 
     /**

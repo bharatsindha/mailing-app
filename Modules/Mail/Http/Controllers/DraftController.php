@@ -39,6 +39,23 @@ class DraftController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return Factory|View
+     */
+    public function sentReport(Request $request)
+    {
+        if (!(request()->ajax())) {
+            return view('mail::sentReport');
+        }
+
+        $results = Session::getSentSessions()->paginate(15);
+
+        return view('mail::sentReportAjax', compact('results'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      * @return Renderable
      */

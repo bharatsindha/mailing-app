@@ -30,11 +30,11 @@
                         </div>
                     </a>
                     <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
-                        <a class="dropdown-item d-flex align-items-center" href="#">
+                        {{--<a class="dropdown-item d-flex align-items-center" href="#">
                             @include('icons.profile')
                             {{ __('My Profile') }}
-                        </a>
-                        <div role="separator" class="dropdown-divider my-1"></div>
+                        </a>--}}
+{{--                        <div role="separator" class="dropdown-divider my-1"></div>--}}
                         <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}"
                            onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                             @include('icons.logout')

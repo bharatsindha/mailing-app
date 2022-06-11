@@ -5,6 +5,11 @@
 @section('stylesheets')
     @parent
     <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css"/>
+    <style>
+        .dropzone {
+            border: 2px dotted #6B7280;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -28,18 +33,22 @@
 
     <div class="row">
         <div class="col-12 col-xl-8">
-            <div class="card card-body border-0 shadow mb-4">
-                <h2 class="fs-5 fw-bold mb-4">{{ __('Draft Information') }}</h2>
-                <form method="POST" action="{{ route('admin.drafts.store') }}" id="composeForm"
-                      enctype="multipart/form-data">
-                    @csrf
-                    @include('mail::form')
-                    @include('actions.form_actions', ['save' => true, 'cancel' => true])
-                </form>
+            <div class="card border-0 shadow mb-4">
+                <div class="card-header d-flex align-items-center">
+                    <h2 class="fs-5 fw-bold mb-0">{{ __('Draft Information') }}</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('admin.drafts.store') }}" id="composeForm"
+                          enctype="multipart/form-data">
+                        @csrf
+                        @include('mail::form')
+                        @include('actions.form_actions', ['save' => true, 'cancel' => true])
+                    </form>
+                </div>
             </div>
         </div>
         <div class="col-12 col-xl-4">
-            <div class="card notification-card border-0 shadow">
+            <div class="card border-0 shadow">
                 <div class="card-header d-flex align-items-center">
                     <h2 class="fs-5 fw-bold mb-0">{{ __('Dynamic Variables') }}</h2>
                 </div>
@@ -81,7 +90,6 @@
     <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
     <script>
 
-        // Replace the <textarea id="editor1"> with a CKEditor 4
         // instance, using default configuration.
         CKEDITOR.replace('mail_content');
 
@@ -90,16 +98,13 @@
         let myDropzone = new Dropzone("div#dAttachment", {
             url: "{{ route('admin.draft.uploadAttachment') }}",
             addRemoveLinks: true,
-            maxFilesize: 10,
-            // dictDefaultMessage: '<span class="text-center">' +
-            //     '<span class="font-lg visible-xs-block visible-sm-block visible-lg-block">' +
-            //     '<span class="font-lg">' +
-            //     '<i class="fa fa-caret-right text-danger"></i> Drop files ' +
-            //     '<span class="font-xs">to upload</span>' +
-            //     '</span>' +
-            //     '<span>&nbsp&nbsp<h4 class="display-inline"> (Or Click)</h4>' +
-            //     '</span>',
-            // dictResponseError: 'Error uploading file!',
+            maxFilesize: 5,
+            // dictDefaultMessage: 'Drop or click here to upload files. Max file size allowed',
+            dictDefaultMessage: '<div class="d-flex align-items-center"><span><i class="fa fa-file-circle-plus" style="width: 30px;height: 30px;"></i></span>' +
+                '<span style="display: inline-block; vertical-align: middle;padding-left: 5px;">' +
+                'Drop Files to upload or CLICK <br>' +
+                '<small style="font-size: 10px; display: block;text-align: left;">' +
+                '<strong>Maximum 5MB file size allowed</strong></small></span></div>',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

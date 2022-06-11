@@ -12,13 +12,17 @@
     </div>
     <div class="row">
         <div class="col-12 col-xl-8">
-            <div class="card card-body border-0 shadow mb-4">
-                <h2 class="h5 mb-4">{{ __('General information') }}</h2>
-                <form method="POST" action="{{ route('admin.users.store') }}">
-                    @csrf
-                    @include('user::form')
-                    @include('actions.form_actions', ['cancel' => true, 'save' => true])
-                </form>
+            <div class="card border-0 shadow mb-4">
+                <div class="card-header d-flex align-items-center">
+                    <h2 class="fs-5 fw-bold mb-0">{{ __('General Information') }}</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('admin.users.store') }}">
+                        @csrf
+                        @include('user::form')
+                        @include('actions.form_actions', ['cancel' => true, 'save' => true])
+                    </form>
+                </div>
             </div>
         </div>
         <div class="col-12 col-xl-4"></div>

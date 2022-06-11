@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('admin.dashboard');
+    return redirect()->route('admin.domains.index');
 })->name('home');
 
 require __DIR__ . '/auth.php';

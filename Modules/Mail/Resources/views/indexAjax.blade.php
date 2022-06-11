@@ -51,7 +51,9 @@
                                             </a>
                                             <a class="dropdown-item d-flex align-items-center"
                                                onclick="checkGmail('{{ $result->id }}', '{{ $result->sender_email }}', '{{ $result->domain_id }}');">
-                                                @include('icons.edit')
+                                                <span class="dropdown-icon text-gray-400 me-2">
+                                                    <i class="fa-solid fa-paper-plane"></i>
+                                                </span>
                                                 Start Email
                                             </a>
                                             <div role="separator" class="dropdown-divider my-1"></div>

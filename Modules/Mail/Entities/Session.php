@@ -46,10 +46,19 @@ class Session extends Model
      */
     public static function getAllDraftSessions()
     {
+        return self::getModelObj()->whereIn('sessions.is_completed', [self::YET_TO_START, self::IN_PROCESS]);
+    }
+
+    /**
+     * Get model reference
+     *
+     * @return mixed
+     */
+    public static function getModelObj()
+    {
         return self::select(['sessions.*', 'domains.name', 'emails.sender_email'])
             ->join((new Domain())->getTable(), 'sessions.domain_id', (new Domain())->getTable() . '.id')
             ->join((new Email())->getTable(), 'sessions.email_id', (new Email())->getTable() . '.id')
-            ->whereIn('sessions.is_completed', [self::YET_TO_START, self::IN_PROCESS])
             ->when(request()->filled('q'), function ($q) {
                 $keyword = request()->input('q');
                 $q->where(function ($query) use ($keyword) {
@@ -61,6 +70,11 @@ class Session extends Model
             })
             ->groupBy('sessions.id')
             ->orderBy('sessions.id', 'desc');
+    }
+
+    public static function getSentSessions()
+    {
+        return self::getModelObj()->whereIn('sessions.is_completed', [self::COMPLETED]);
     }
 
     /**
@@ -101,7 +115,8 @@ class Session extends Model
      */
     public function composesSent()
     {
-        return $this->hasMany(Compose::class)->where('status', Compose::SENT);
+        return $this->hasMany(Compose::class)
+            ->whereIn('status', [Compose::SENT, Compose::OPENED, Compose::BOUNCED]);
     }
 
     /**

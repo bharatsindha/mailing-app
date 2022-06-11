@@ -13,6 +13,8 @@
 
 use Modules\Mail\Http\Controllers\DraftController;
 
+Route::get('mail/img/{compose}', 'MailingController@emailOpenTrack')->name('openTrack.img');
+
 Route::prefix('mail')->middleware(['auth', 'check.role.web:admin'])->name('admin.')->group(function () {
     Route::resource('drafts', DraftController::class);
     Route::post('uploadAttachment', 'AttachmentController@uploadAttachment')->name('draft.uploadAttachment');
@@ -24,6 +26,6 @@ Route::prefix('mail')->middleware(['auth', 'check.role.web:admin'])->name('admin
     Route::get('send/{session}', 'MailingController@startMailing')->name('mail.startMailing');
     Route::post('getEmail/{session}', 'MailingController@getEmail')->name('mail.getEmail');
     Route::post('sendEmail/{session}', 'MailingController@sendEmail')->name('mail.sendEmail');
-});
 
-Route::get('email/img/{compose}', 'MailingController@emailOpenTrack')->name('openTrack.img');
+    Route::get('sentReport', 'DraftController@sentReport')->name('mail.sentReport');
+});

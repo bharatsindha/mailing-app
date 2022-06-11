@@ -1,6 +1,6 @@
 @extends('layouts.admin.main')
 
-@section('title', 'Emails')
+@section('title', 'Sender Emails')
 
 @section('stylesheets')
     @parent
@@ -9,14 +9,14 @@
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
-            <h2 class="h4">{{ __('Emails') }}</h2>
-            @include('layouts.admin.breadcrumb', ['module' => 'Emails'])
+            <h2 class="h4">{{ __('Sender Emails') }}</h2>
+            @include('layouts.admin.breadcrumb', ['module' => 'Sender Emails'])
         </div>
         <div class="btn-toolbar mb-2 mb-md-0">
             <a href="{{ route('admin.emails.create') }}"
                class="btn btn-sm btn-secondary d-inline-flex align-items-center">
                 @include('icons.add')
-                {{ __('New Email') }}</a>
+                {{ __('New Sender Email') }}</a>
         </div>
     </div>
     <div class="table-settings mb-4">

@@ -4,6 +4,7 @@ namespace App\Facades;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Facade;
+use Modules\Mail\Entities\Compose;
 use Modules\Mail\Entities\Session;
 
 Class General extends Facade
@@ -61,6 +62,12 @@ Class General extends Facade
         return $recipient;
     }
 
+    /**
+     * Get draft status
+     *
+     * @param $status
+     * @return string
+     */
     public static function getDraftStatus($status)
     {
         if ($status === Session::YET_TO_START) {
@@ -73,6 +80,13 @@ Class General extends Facade
             return 'Not Sent';
         }
     }
+
+    /**
+     * get draft badge class
+     *
+     * @param $status
+     * @return string
+     */
     public static function getDraftBadgeClass($status)
     {
         if ($status === Session::YET_TO_START) {
@@ -83,6 +97,44 @@ Class General extends Facade
             return 'success';
         } else {
             return 'primary';
+        }
+    }
+
+    /**
+     * Get compose status
+     *
+     * @param $status
+     * @return string
+     */
+    public static function getComposeStatus($status)
+    {
+        if ($status === Compose::BOUNCED) {
+            return 'Bounced';
+        } else if ($status === Compose::OPENED) {
+            return 'Opened';
+        } else if ($status === Compose::SENT) {
+            return 'Sent';
+        } else {
+            return 'Not Sent';
+        }
+    }
+
+    /**
+     * get compose badge class
+     *
+     * @param $status
+     * @return string
+     */
+    public static function getComposeBadgeClass($status)
+    {
+        if ($status === Compose::BOUNCED) {
+            return 'danger';
+        } else if ($status === Compose::OPENED) {
+            return 'success';
+        } else if ($status === Compose::SENT) {
+            return 'success';
+        } else {
+            return 'secondary';
         }
     }
 

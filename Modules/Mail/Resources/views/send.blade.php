@@ -13,10 +13,9 @@
             @include('layouts.admin.breadcrumb', ['module' => 'Sending Mail'])
         </div>
     </div>
-
     <div class="row">
         <div class="col-12 col-xl-12">
-            <div class="card card-body border-0 shadow mb-4">
+            <div class="card card-body bg-transparent mb-4">
                 <div class="row">
                     <div class="col-md-3">
                         <strong>Domain: </strong>
@@ -34,7 +33,7 @@
                         <label id="totalSent">0</label>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col-md-12">
                         <strong>Subject: </strong>{{ $session->subject }}
                     </div>
@@ -47,9 +46,10 @@
         <div class="col-12">
             <div class="ajax-content">
                 <table class="table table-hover" id="mailingTable">
-                    <tr>
+                    <tr style="background: rgba(17, 24, 39, 0.075)">
                         <th>{{ __('#') }}</th>
                         <th>{{ __('Email') }}</th>
+                        <th>{{ __('Name') }}</th>
                         <th>{{ __('Company') }}</th>
                         <th>{{ __('Status') }}</th>
                     </tr>
@@ -98,6 +98,8 @@
                         $('#mailingTable tr').last().after('<tr>' +
                             '<td>' + totalSent + '</td>' +
                             '<td>' + response.session.composes_pending.to + '</td>' +
+                            '<td>' + response.session.composes_pending.first_name + ' ' +
+                            response.session.composes_pending.last_name + '</td>' +
                             '<td>' + response.session.composes_pending.company_name + '</td>' +
                             '<td><img id="loading-image" src="{{ asset('img/ajax-loader.gif')}}" style=""/></td>' +
                             '</tr>');
@@ -107,6 +109,10 @@
                         setTimeout(function () {
                             loadData();
                         }, rand);
+                    } else {
+                        $('#mailingTable tr').last().after('<tr>' +
+                            '<td colspan="5" class="text-center"> <b>Completed</b> </td>' +
+                            '</tr>');
                     }
                 },
                 error: function () {
@@ -145,11 +151,17 @@
                             $('#mailingTable tr').last().after('<tr>' +
                                 '<td>' + totalSent + '</td>' +
                                 '<td>' + response.session.composes_pending.to + '</td>' +
+                                '<td>' + response.session.composes_pending.first_name + ' ' +
+                                response.session.composes_pending.last_name + '</td>' +
                                 '<td>' + response.session.composes_pending.company_name + '</td>' +
                                 '<td>Mail Sent <img src="' + img + '" style="height: 10px; padding-left: 5px;" alt=""/></td>' +
                                 '</tr>');
 
                             getEmail();
+                        } else {
+                            $('#mailingTable tr').last().after('<tr>' +
+                                '<td colspan="5" class="text-center"> <b>Completed</b> </td>' +
+                                '</tr>');
                         }
                     }
                 },
