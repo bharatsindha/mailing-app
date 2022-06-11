@@ -29,7 +29,7 @@ class AttachmentController extends Controller
 
                 return response()->json([
                     'filename'        => $filename,
-                    'path'            => '/storage/' . $path,
+                    'path'            => '/storage/' . Attachment::ATTACHMENT_PATH . DIRECTORY_SEPARATOR . $filename,
                     'filename_origin' => $filenameOrigin,
                 ]);
             }

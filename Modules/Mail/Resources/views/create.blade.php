@@ -1,6 +1,6 @@
 @extends('layouts.admin.main')
 
-@section('title', 'Compose')
+@section('title', 'Drafts')
 
 @section('stylesheets')
     @parent
@@ -10,8 +10,8 @@
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
-            <h2 class="h4">{{ __('Compose') }}</h2>
-            @include('layouts.admin.breadcrumb', ['module' => 'Compose'])
+            <h2 class="h4">{{ __('Drafts') }}</h2>
+            @include('layouts.admin.breadcrumb', ['module' => 'Drafts'])
         </div>
     </div>
 
@@ -29,6 +29,7 @@
     <div class="row">
         <div class="col-12 col-xl-8">
             <div class="card card-body border-0 shadow mb-4">
+                <h2 class="fs-5 fw-bold mb-4">{{ __('Draft Information') }}</h2>
                 <form method="POST" action="{{ route('admin.drafts.store') }}" id="composeForm"
                       enctype="multipart/form-data">
                     @csrf
@@ -37,7 +38,39 @@
                 </form>
             </div>
         </div>
-        <div class="col-12 col-xl-4"></div>
+        <div class="col-12 col-xl-4">
+            <div class="card notification-card border-0 shadow">
+                <div class="card-header d-flex align-items-center">
+                    <h2 class="fs-5 fw-bold mb-0">{{ __('Dynamic Variables') }}</h2>
+                </div>
+                <div class="card-body">
+                    <p>Please use these variables in subject or mail content to replace the receiver details
+                        dynamic.</p>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name">{{ __('First Name') }}</label>
+                            <div class="small text-gray"><code>@{{firstName}}</code></div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="name">{{ __('Last Name') }}</label>
+                            <div class="small text-gray"><code>@{{lastName}}</code></div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="name">{{ __('Company Name') }}</label>
+                            <div class="small text-gray"><code>@{{company}}</code></div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="name">{{ __('Designation') }}</label>
+                            <div class="small text-gray"><code>@{{designation}}</code></div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="name">{{ __('Project Name') }}</label>
+                            <div class="small text-gray"><code>@{{project}}</code></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

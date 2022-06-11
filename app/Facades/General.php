@@ -4,6 +4,7 @@ namespace App\Facades;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Facade;
+use Modules\Mail\Entities\Session;
 
 Class General extends Facade
 {
@@ -58,6 +59,31 @@ Class General extends Facade
             $recipient = '=?' . $recipientsCharset . '?B?' . base64_encode($regs[1]) . '?= <' . $regs[2] . '>';
         }
         return $recipient;
+    }
+
+    public static function getDraftStatus($status)
+    {
+        if ($status === Session::YET_TO_START) {
+            return 'Not Sent';
+        } else if ($status === Session::IN_PROCESS) {
+            return 'Sending';
+        } else if ($status === Session::COMPLETED) {
+            return 'Sent';
+        } else {
+            return 'Not Sent';
+        }
+    }
+    public static function getDraftBadgeClass($status)
+    {
+        if ($status === Session::YET_TO_START) {
+            return 'primary';
+        } else if ($status === Session::IN_PROCESS) {
+            return 'info';
+        } else if ($status === Session::COMPLETED) {
+            return 'success';
+        } else {
+            return 'primary';
+        }
     }
 
     protected static function getFacadeAccessor()

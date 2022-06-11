@@ -78,6 +78,19 @@ class DraftController extends Controller
     }
 
     /**
+     * Show the resource
+     *
+     * @param $id
+     * @return Factory|View
+     */
+    public function show($id)
+    {
+        $session = Session::find($id);
+
+        return view('mail::show', compact('session'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param $id

@@ -2,7 +2,7 @@
     <div class="card-body">
         <div class="table-responsive">
             @if (count($results) > 0)
-                <table class="table table-centered table-nowrap mb-0 rounded" style="min-height: 20vh;">
+                <table class="table table-centered table-nowrap mb-0 rounded" style="min-height: 25vh;">
                     <thead class="thead-light">
                     <tr>
                         <th class="border-0 rounded-start">{{ __('#') }}</th>
@@ -24,7 +24,9 @@
                                 </a>
                             </td>
                             <td><span>{{ $result->sender_email }}</span></td>
-                            <td><span>{{ $result->subject }}</span></td>
+                            <td>
+                                <span>{{ strlen($result->subject) > 60 ? substr($result->subject, 0, 60) . '...' : $result->subject }}</span>
+                            </td>
                             <td><span>{{ $result->total_emails }}</span></td>
                             <td>
                                 <span>
@@ -42,6 +44,11 @@
                                         </button>
                                         <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1"
                                              style="">
+                                            <a class="dropdown-item d-flex align-items-center"
+                                               href="{{ route('admin.drafts.show', $result->id) }}">
+                                                @include('icons.view')
+                                                View Draft
+                                            </a>
                                             <a class="dropdown-item d-flex align-items-center"
                                                onclick="checkGmail('{{ $result->id }}', '{{ $result->sender_email }}', '{{ $result->domain_id }}');">
                                                 @include('icons.edit')

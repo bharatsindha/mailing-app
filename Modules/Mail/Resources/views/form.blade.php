@@ -32,6 +32,9 @@
 
     <div class="col-md-12 mb-3">
         <label for="excelFile">{{ __('Upload excel File') }}</label>
+        <small class="form-text text-muted">( Please
+            <a href="{{ asset('img/sample-excel-sheet-format.png') }}" target="_blank"><b>click here</b></a>
+            to see the sample of excel sheet format. It should be ".xls" or ".xlsx".)</small>
         <input class="form-control {{ $errors->has('excelFile') ? 'is-invalid' : '' }}" type="file" id="excelFile"
                name="excelFile"
                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
@@ -48,7 +51,7 @@
                    type="text"
                    name="subject"
                    value="{{ old('subject') }}"
-                   placeholder="{{ __('Enter subject') }}" required="">
+                   placeholder="{{ __('Subject Line') }}" required="">
             @if($errors->has('subject'))
                 <div class="invalid-feedback">{{ $errors->first('subject') }}</div>
             @endif

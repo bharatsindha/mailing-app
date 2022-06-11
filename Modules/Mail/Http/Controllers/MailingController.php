@@ -159,7 +159,7 @@ class MailingController extends Controller
             <img src="' . route('unsubscribe.img', ['person' => $personId, 'compose' => $composeId]) . '"
             alt="unsubscribe">', $strMailContent);*/
 
-        $openTrackContent = '<img src="' . route('openTrack.img', $composeId) . '" alt="unsubscribe">';
+//        $openTrackContent = '<img src="' . route('openTrack.img', $composeId) . '" alt="unsubscribe">';
 
         $strSubject = $subject;
         $strSubject = str_replace("{{firstName}}", $receiverFirstName, $strSubject);
@@ -192,13 +192,34 @@ class MailingController extends Controller
         $strRawMessage .= "\r\n--{$boundarySub}\r\n";
         $strRawMessage .= 'Content-Type: text/plain; charset=' . $charset . "\r\n";
         $strRawMessage .= 'Content-Transfer-Encoding: 7bit' . "\r\n\r\n";
-        $strRawMessage .= strip_tags($strMailContent) . $openTrackContent . "\r\n";
+        $strRawMessage .= strip_tags($strMailContent) . "\r\n";
         $strRawMessage .= "\r\n--{$boundarySub}\r\n";
         $strRawMessage .= 'Content-Type: text/html; charset=' . $charset . "\r\n";
         $strRawMessage .= "\n\n" . $strMailContent . "\r\n";
         $strRawMessage .= "\r\n--{$boundarySub}--\r\n";
         $strRawMessage .= "\r\n--{$boundary}\r\n";
+
+        // Attachments
+        if ($session->attachments()->count()) {
+            foreach ($session->attachments as $aKey => $attachment) {
+                $filePath = public_path($attachment->path);
+                $finfo = finfo_open(FILEINFO_MIME_TYPE); // return mime type ala mime type extension
+                $mimeType = finfo_file($finfo, $filePath);
+                $fileName = $attachment->filename;
+
+                $strRawMessage .= 'Content-Type: ' . $mimeType . '; name="' . $fileName . '";' . "\r\n";
+                $strRawMessage .= 'Content-ID: <' . $session->email->sender_email . '>' . "\r\n";
+                $strRawMessage .= 'Content-Description: ' . $fileName . ';' . "\r\n";
+                $strRawMessage .= 'Content-Disposition: attachment; filename="' . $fileName . '"; size=' . filesize($filePath) . ';' . "\r\n";
+                $strRawMessage .= 'Content-Transfer-Encoding: base64' . "\r\n\r\n";
+                $strRawMessage .= chunk_split(base64_encode(file_get_contents($filePath)), 76, "\n") . "\r\n";
+                $strRawMessage .= "\r\n--{$boundary}\r\n";
+            }
+        }
+
         $strRawMessage .= '--' . $boundary . "--\r\n";
+
+//        dd($strRawMessage);
 
         try {
             $mime = rtrim(strtr(base64_encode($strRawMessage), '+/', '-_'), '=');
@@ -206,6 +227,7 @@ class MailingController extends Controller
             $msg->setRaw($mime);
             $message = $gmail->users_messages->send('me', $msg);
 
+//            dd("send");
             if ($message->getId()) {
                 $compose = Compose::find($composeId);
                 $compose->status = Compose::SENT;
