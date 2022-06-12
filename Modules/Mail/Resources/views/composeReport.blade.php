@@ -26,7 +26,7 @@
                     <td><span>{{ $result->company_name }}</span></td>
                     <td><span>{{ $result->designation }}</span></td>
                     <td><span>{{ $result->project_name }}</span></td>
-                    <td><span>{{ $result->first_name }}</span></td>
+                    <td><span>{{ \App\Facades\General::datetimeFormat($result->send_date) }}</span></td>
                     <td>
                         <div class="text-end">
                             <span class="badge bg-{{ \App\Facades\General::getComposeBadgeClass($result->status) }}">

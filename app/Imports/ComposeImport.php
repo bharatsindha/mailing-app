@@ -93,6 +93,7 @@ class ComposeImport implements ToCollection, WithHeadingRow
                 // Save compose data for the session
                 foreach ($collection->toArray() as $key => $row) {
                     $compose = new Compose($row);
+                    $compose->email_id = $this->request->email_id;
                     $session->composes()->save($compose);
                 }
 

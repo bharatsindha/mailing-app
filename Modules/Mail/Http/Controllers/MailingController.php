@@ -160,8 +160,8 @@ class MailingController extends Controller
             <img src="' . route('unsubscribe.img', ['person' => $personId, 'compose' => $composeId]) . '"
             alt="unsubscribe">', $strMailContent);*/
 
-//        $strMailContent .= '<img src="' . route('openTrack.img', $composeId) . '" alt="unsubscribe">';
-        $strMailContent .= '<img src="http://1bc6-2409-4041-e9c-528c-de6b-5b85-a504-1733.in.ngrok.io/mail/img/' . $composeId . '" alt="unsubscribe">';
+        $strMailContent .= '<img src="' . route('openTrack.img', $composeId) . '" alt="unsubscribe">';
+//        $strMailContent .= '<img src="http://1bc6-2409-4041-e9c-528c-de6b-5b85-a504-1733.in.ngrok.io/mail/img/' . $composeId . '" alt="unsubscribe">';
 
         $strSubject = $subject;
         $strSubject = str_replace("{{firstName}}", $receiverFirstName, $strSubject);
@@ -296,6 +296,7 @@ class MailingController extends Controller
             $client->fetchAccessTokenWithAuthCode($_GET['code']);
             \Illuminate\Support\Facades\Session::put('access_token', $client->getAccessToken());
         }
+
         if (\Illuminate\Support\Facades\Session::has('access_token'))
             $client->setAccessToken(\Illuminate\Support\Facades\Session::get('access_token'));
         else
@@ -320,10 +321,9 @@ class MailingController extends Controller
     /**
      * Redirect to GMail login and update the login session
      *
-     * @param Domain $domain
      * @return RedirectResponse
      */
-    public function connection(Domain $domain)
+    public function connection()
     {
         try {
             session_start();
@@ -347,14 +347,13 @@ class MailingController extends Controller
 
             if (isset($_GET['code'])) {
                 $client->fetchAccessTokenWithAuthCode($_GET['code']);
-                $_SESSION['access_token'] = $client->getAccessToken();
-                header('Location: ' . filter_var($redirectUri, FILTER_SANITIZE_URL));
-                exit;
+                \Illuminate\Support\Facades\Session::put('access_token', $client->getAccessToken());
             }
 
-            if (isset($_SESSION['access_token']) && $_SESSION['access_token'])
-                $client->setAccessToken($_SESSION['access_token']);
-            else $authUrl = $client->createAuthUrl();
+            if (\Illuminate\Support\Facades\Session::has('access_token'))
+                $client->setAccessToken(\Illuminate\Support\Facades\Session::get('access_token'));
+            else
+                $authUrl = $client->createAuthUrl();
 
             if ($client->isAccessTokenExpired()) $authUrl = $client->createAuthUrl();
 
@@ -369,18 +368,29 @@ class MailingController extends Controller
                 echo "connected";
                 echo "<script>
                   if (window.opener != null && !window.opener.closed) {
-                    let currentSessionIdOpener = window.opener.document.getElementById('currentSessionId').value;
+                    let connectionType = window.opener.document.getElementById('connectionType').value;
                     let currentSenderEmailOpener = window.opener.document.getElementById('currentSenderEmail').value;
                     let connectedSenderEmail = document.getElementById('connectedSenderEmail').value;
 
                     if(currentSenderEmailOpener === connectedSenderEmail){
-                      let redirectLink = '" . route('admin.mail.startMailing', 'SESSION_ID') . "';
-                      redirectLink = redirectLink.replace('SESSION_ID', currentSessionIdOpener);
-                      window.opener.open(redirectLink,'_blank');
+                        if(connectionType === 'send email'){
+                            let currentSessionIdOpener = window.opener.document.getElementById('currentSessionId').value;
+
+                            let redirectLink = '" . route('admin.mail.startMailing', 'SESSION_ID') . "';
+                             redirectLink = redirectLink.replace('SESSION_ID', currentSessionIdOpener);
+
+                             window.opener.open(redirectLink,'_blank');
+                        } else {
+                            window.opener.startBounceTracking();
+                        }
                     }else{
                       alert('Logged In Email ID is different than Sender Email ID.Please login with '+
                       currentSenderEmailOpener+' Email ID.');
-                      window.opener.location.href = '" . route('admin.drafts.index') . "?logout=1';
+                      if(connectionType === 'send email'){
+                          window.opener.location.href = '" . route('admin.drafts.index') . "?logout=1';
+                      } else {
+                          window.opener.location.href = '" . route('admin.mail.bounceTrack') . "?logout=1';
+                      }
                     }
 
                     window.close();

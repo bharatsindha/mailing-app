@@ -28,4 +28,6 @@ Route::prefix('mail')->middleware(['auth', 'check.role.web:admin'])->name('admin
     Route::post('sendEmail/{session}', 'MailingController@sendEmail')->name('mail.sendEmail');
 
     Route::get('sentReport', 'DraftController@sentReport')->name('mail.sentReport');
+    Route::get('bounceTrack', 'BounceController@index')->name('mail.bounceTrack');
+    Route::post('bounceTracking/{email}', 'BounceController@bounceTracking')->name('mail.bounceTracking');
 });

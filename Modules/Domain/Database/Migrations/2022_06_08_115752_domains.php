@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('domains', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->index();
             $table->string('url')->unique();
             $table->string('client_id');
             $table->string('client_secret');

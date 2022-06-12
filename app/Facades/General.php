@@ -23,6 +23,19 @@ Class General extends Facade
     }
 
     /**
+     * Get the date in format
+     *
+     * @param $date
+     * @return string|null
+     */
+    public static function datetimeFormat($date)
+    {
+        if (is_null($date) || empty($date)) return null;
+
+        return Carbon::parse($date)->toDateTimeString();
+    }
+
+    /**
      * Encrypt & Decrypt the string
      *
      * @param $action

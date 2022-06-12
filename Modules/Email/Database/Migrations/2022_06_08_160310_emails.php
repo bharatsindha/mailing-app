@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
-            $table->integer('domain_id');
+            $table->integer('domain_id')->index();
             $table->string('sender_name');
             $table->string('sender_email')->unique();
+            $table->dateTime('bounce_track_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

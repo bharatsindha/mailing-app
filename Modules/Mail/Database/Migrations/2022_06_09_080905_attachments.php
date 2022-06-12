@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->string('session_id', 50);
+            $table->string('session_id', 50)->index();
             $table->string('filename');
             $table->string('path');
             $table->string('filename_origin');

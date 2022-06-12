@@ -87,6 +87,12 @@
                                 <span class="sidebar-text">Drafts</span>
                             </a>
                         </li>
+                        <li class="nav-item {{ (request()->is('*/bounceTrack') || request()->is('*/bounceTrack/*')) ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('admin.mail.bounceTrack') }}">
+                                <span class="sidebar-text-contracted">B</span>
+                                <span class="sidebar-text">Bounce Track</span>
+                            </a>
+                        </li>
                         <li class="nav-item {{ (request()->is('*/sentReport') || request()->is('*/sentReport/*')) ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('admin.mail.sentReport') }}">
                                 <span class="sidebar-text-contracted">S</span>

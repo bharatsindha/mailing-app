@@ -1,6 +1,6 @@
 @extends('layouts.admin.main')
 
-@section('title', 'Drafts')
+@section('title', 'Bounce Track')
 
 @section('stylesheets')
     @parent
@@ -9,14 +9,8 @@
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
-            <h2 class="h4">{{ __('Drafts') }}</h2>
-            @include('layouts.admin.breadcrumb', ['module' => 'Drafts'])
-        </div>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="{{ route('admin.drafts.create') }}"
-               class="btn btn-sm btn-secondary d-inline-flex align-items-center">
-                @include('icons.add')
-                {{ __('New Draft') }}</a>
+            <h2 class="h4">{{ __('Bounce Track') }}</h2>
+            @include('layouts.admin.breadcrumb', ['module' => 'Bounce Track'])
         </div>
     </div>
     <div class="table-settings mb-4">
@@ -28,7 +22,7 @@
                     <span class="input-group-text">
                         @include('icons.search')
                     </span>
-                        <input type="text" name="q" id="q" class="form-control" placeholder="Search Drafts"
+                        <input type="text" name="q" id="q" class="form-control" placeholder="Search Email"
                                autocomplete="off">
                     </div>
                     <div class="input-group">
@@ -39,16 +33,62 @@
             <div class="col-3 col-lg-4 d-flex justify-content-end"></div>
         </div>
     </div>
-    <input type="hidden" name="currentSessionId" id="currentSessionId" value="">
+    <input type="hidden" name="currentEmailId" id="currentEmailId" value="">
     <input type="hidden" name="currentSenderEmail" id="currentSenderEmail" value="">
     <input type="hidden" name="currentDomainId" id="currentDomainId" value="">
-    <input type="hidden" name="connectionType" id="connectionType" value="send email">
+    <input type="hidden" name="connectionType" id="connectionType" value="bounce track">
     <div class="ajax-content"></div>
 @endsection
 
 @section('scripts')
     @parent
+
     <script>
+
+        function startBounceTracking() {
+
+            console.log("started bounce tracking");
+
+            let emailId = $("#currentEmailId").val();
+            let currentSenderEmail = $("#currentSenderEmail").val();
+
+            if (emailId > 0) {
+                let bounceTrackUrl = "{{ route('admin.mail.bounceTracking', 'EMAIL_ID') }}";
+                bounceTrackUrl = bounceTrackUrl.replace('EMAIL_ID', emailId);
+
+                $.ajax({
+                    type: "POST",
+                    url: bounceTrackUrl,
+                    data: {
+                        '_token': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (response) {
+                        // console.log(response, "response")
+                        if (response.status === 'notConnected') {
+                            let domainId = $("#currentDomainId").val();
+                            syncGMailConnection(domainId);
+                        } else {
+                            notyf.open({
+                                type: 'success',
+                                message: 'Bounce tracked successfully for the email ' + currentSenderEmail
+                            });
+                        }
+                    },
+                    error: function () {
+                        notyf.open({
+                            type: 'danger',
+                            message: 'Something went wrong. Please try later.'
+                        });
+                    }
+                });
+
+            } else {
+                notyf.open({
+                    type: 'danger',
+                    message: 'System could not recognize email. Please try later.'
+                });
+            }
+        }
 
         /**
          * Set cookie
@@ -65,39 +105,25 @@
         }
 
         /**
-         * Get Cookie
-         *
-         * @param cookieName
-         * @returns {string}
-         */
-        function getCookie(cookieName) {
-            let name = cookieName + "=";
-            let decodedCookie = decodeURIComponent(document.cookie);
-            let ca = decodedCookie.split(';');
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) === 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        }
-
-        /**
          * Check connection with GMail
          *
-         * @param sessionId
+         * @param emailId
          * @param senderEmail
          * @param domainId
          */
-        function checkGmail(sessionId, senderEmail, domainId) {
-            $("#currentSessionId").val(sessionId);
+        function checkGMail(emailId, senderEmail, domainId) {
+            $("#currentEmailId").val(emailId);
             $("#currentSenderEmail").val(senderEmail);
             $("#currentDomainId").val(domainId);
 
+            syncGMailConnection(domainId);
+        }
+
+        /**
+         * Connect to GMail
+         *
+         **/
+        function syncGMailConnection(domainId) {
             setCookie("tempDomainId", domainId, 1);
             PopupCenterDual("{{ route('admin.mail.connection') }}", 'GMail login page', '450', '450');
         }
@@ -138,7 +164,6 @@
         function get_data_ajax() {
             let form = $('form#get_data');
 
-            console.log("working here");
             $.ajax({
                 type: form.attr('method'),
                 url: form.attr('action'),

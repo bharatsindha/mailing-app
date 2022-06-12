@@ -19,7 +19,7 @@ class Compose extends Model
      * @var array
      */
     protected $fillable = [
-        'session_id', 'first_name', 'last_name', 'to', 'cc', 'bcc', 'designation',
+        'session_id','email_id', 'first_name', 'last_name', 'to', 'cc', 'bcc', 'designation',
         'project_name', 'company_name', 'status'
     ];
 
