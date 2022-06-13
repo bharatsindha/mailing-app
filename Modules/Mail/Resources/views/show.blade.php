@@ -2,6 +2,18 @@
 @section('title', 'Drafts')
 @section('stylesheets')
     @parent
+    <style>
+        .mail-content-view {
+            background-color: #F2F4F6;
+            display: block;
+            padding: 20px;
+            color: inherit;
+            border-radius: 8px;
+        }
+        .mail-content-view p {
+            font-size: 0.827rem;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -14,7 +26,7 @@
         <div class="col-12 col-xl-8">
             <div class="card border-0 shadow mb-4">
                 <div class="card-header d-flex align-items-center">
-                    <h2 class="fs-5 fw-bold mb-0">{{ __('Draft Information') }}</h2>
+                    <h2 class="fs-5 fw-bold mb-0">{{ __('Draft Details') }}</h2>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -24,8 +36,8 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="name">{{ __('Sender Email') }}</label>
-                            <div class="small text-gray">{{ $session->email->sender_name }}
-                                ({{ $session->email->sender_email }})
+                            <div class="small text-gray">
+                                {{ $session->email->sender_name .'<' .$session->email->sender_email . '>' }}
                             </div>
                         </div>
                     </div>
@@ -37,8 +49,7 @@
                         <div class="col-md-12 mb-3">
                             <label for="name">{{ __('Mail Content') }}</label>
                             <div class="small text-gray">
-                                <code
-                                    style="background-color: #F2F4F6;display: block;padding: 20px; color: inherit;border-radius: 8px;">
+                                <code class="mail-content-view">
                                     {!! $session->mail_content !!}
                                 </code>
                             </div>
@@ -55,7 +66,7 @@
         <div class="col-12 col-xl-4">
             <div class="card border-0 shadow mb-4">
                 <div class="card-header d-flex align-items-center">
-                    <h2 class="fs-5 fw-bold mb-0">{{ __('Draft Status') }}</h2>
+                    <h2 class="fs-5 fw-bold mb-0">{{ __('Status') }}</h2>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -72,7 +83,7 @@
             </div>
             <div class="card border-0 shadow mb-4">
                 <div class="card-header d-flex align-items-center">
-                    <h2 class="fs-5 fw-bold mb-0">{{ __('Email information') }}</h2>
+                    <h2 class="fs-5 fw-bold mb-0">{{ __('Email Details') }}</h2>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -143,7 +154,7 @@
         <div class="col-12 col-xl-12">
             <div class="card border-0 shadow mb-4">
                 <div class="card-header d-flex align-items-center">
-                    <h2 class="fs-5 fw-bold mb-0">{{ __('Email Receiver Information') }}</h2>
+                    <h2 class="fs-5 fw-bold mb-0">{{ __('Receiver Details') }}</h2>
                 </div>
                 <div class="card-body">
                     @include('mail::composeReport', ['results' => $session->composes])
@@ -158,7 +169,6 @@
 @section('scripts')
     @parent
     <script>
-
 
 
     </script>

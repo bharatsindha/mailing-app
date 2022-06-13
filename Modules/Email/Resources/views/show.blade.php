@@ -14,7 +14,7 @@
         <div class="col-12 col-xl-8">
             <div class="card border-0 shadow mb-4">
                 <div class="card-header d-flex align-items-center">
-                    <h2 class="fs-5 fw-bold mb-0">{{ __('Sender Email Information') }}</h2>
+                    <h2 class="fs-5 fw-bold mb-0">{{ __('Sender Email Details') }}</h2>
                 </div>
                 <div class="card-body">
                     <div class="row">

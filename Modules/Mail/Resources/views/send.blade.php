@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-md-5">
                         <strong>Sender Email: </strong>
-                        ({{$session->email->sender_name}}) {{ $session->email->sender_email }}
+                        {{$session->email->sender_name . '<'. $session->email->sender_email. '>'}}
                     </div>
                     <div class="col-md-2">
                         <strong>Total Email: </strong>{{ $session->total_emails }}
@@ -34,8 +34,12 @@
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12">
+                    <div class="col-md-10">
                         <strong>Subject: </strong>{{ $session->subject }}
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-outline-gray-500 animate-up-2" target="_blank"
+                           href="{{ route('admin.drafts.show', $session->id) }}">View more details</a>
                     </div>
                 </div>
             </div>
@@ -140,6 +144,15 @@
                             getEmail();
                         }, 30000);
 
+                    } else if (response.status === 'emailNotMatch') {
+                        $('#mailingTable tr').last().remove();
+                        $('#mailingTable tr').last().after('<tr>' +
+                            '<td colspan="5" class="text-center text-danger"> ' +
+                            '<b>Stopped mailing.</b> You are connected to different GMail ID ' +
+                            'instead <b> {{ $session->email->sender_email }}</b>. Please ' +
+                            '<a href="{{ route('admin.drafts.index') . '?logout=1'  }}"><b>click here</b></a> to ' +
+                            'logout the current session and try again with the same GMail ID.</td>' +
+                            '</tr>');
                     } else {
                         if (response.status !== 'completed') {
                             let totalSent = parseInt(qTotalSent.text(), 10);

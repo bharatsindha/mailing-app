@@ -14,7 +14,7 @@
         <div class="col-12 col-xl-8">
             <div class="card border-0 shadow mb-4">
                 <div class="card-header d-flex align-items-center">
-                    <h2 class="fs-5 fw-bold mb-0">{{ __('Domain Information') }}</h2>
+                    <h2 class="fs-5 fw-bold mb-0">{{ __('Domain Details') }}</h2>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('admin.domains.store') }}">

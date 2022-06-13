@@ -127,6 +127,8 @@ Class General extends Facade
             return 'Opened';
         } else if ($status === Compose::SENT) {
             return 'Sent';
+        } else if ($status === Compose::ERROR) {
+            return 'Error';
         } else {
             return 'Not Sent';
         }
@@ -146,6 +148,8 @@ Class General extends Facade
             return 'success';
         } else if ($status === Compose::SENT) {
             return 'success';
+        } else if ($status === Compose::ERROR) {
+            return 'danger';
         } else {
             return 'secondary';
         }

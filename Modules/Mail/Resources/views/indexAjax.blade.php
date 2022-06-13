@@ -18,12 +18,8 @@
                     @foreach ($results as $result)
                         <tr>
                             <td><span class="font-weight-bold">{{ $result->id }}</span></td>
-                            <td>
-                                <a href="{{ route('admin.domains.show', $result->domain_id) }}">
-                                    <span>{{ $result->name }}</span>
-                                </a>
-                            </td>
-                            <td><span>{{ $result->sender_email }}</span></td>
+                            <td><span>{{ $result->name }}</span></td>
+                            <td><span>{{ $result->sender_name .'<' .$result->sender_email .'>' }}</span></td>
                             <td>
                                 <span>{{ strlen($result->subject) > 60 ? substr($result->subject, 0, 60) . '...' : $result->subject }}</span>
                             </td>

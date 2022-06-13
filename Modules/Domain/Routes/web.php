@@ -12,7 +12,9 @@
 */
 
 use Modules\Domain\Http\Controllers\DomainController;
+use Modules\User\Entities\User;
 
-Route::middleware(['auth', 'check.role.web:admin'])->name('admin.')->group(function () {
+$role = User::ADMIN_ROLE;
+Route::middleware(['auth', "check.role.web:$role"])->name('admin.')->group(function () {
     Route::resource('domains', DomainController::class);
 });

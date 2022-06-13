@@ -68,16 +68,11 @@ class BounceController extends Controller
             goto End;
         }
 
-        /*$service = new Google_Service_Oauth2($client);
-        $user = $service->userinfo->get();
-        $senderEmail = $user->email;
-        $senderName = $user->name;*/
-
         try {
             $searchFilter = '';
             $lastTrackDate = $email->bounce_track_date;
             $before = Carbon::today()->addDays(2)->timestamp;
-            $updatedTrackDate = Carbon::today()->toDateTimeString();
+            $updatedTrackDate = Carbon::now()->toDateTimeString();
 
             if ($lastTrackDate != '' && $lastTrackDate != '0000-00-00 00:00:00' && $lastTrackDate != null) {
                 if (Carbon::parse($lastTrackDate)->toDateString() != '1970-01-01') {
@@ -250,7 +245,7 @@ class BounceController extends Controller
         }
 
         End:{
-        return response()->json(['status' => $status, 'session' => '']);
+        return response()->json(['status' => $status]);
     }
     }
 

@@ -15,6 +15,7 @@
         <link type="text/css" href="{{ asset('admin_template/vendor/notyf/notyf.min.css') }}" rel="stylesheet">
         <!-- Volt CSS -->
         <link type="text/css" href="{{ asset('admin_template/css/volt.css') }}" rel="stylesheet">
+        <link type="text/css" href="{{ asset('admin_template/css/custom.css') }}" rel="stylesheet">
 
         <link type="text/css" href="{{ asset('admin_template/vendor/fontawesome/css/all.min.css') }}" rel="stylesheet">
         <style>
@@ -32,8 +33,10 @@
 @include('layouts.admin.sidebar')
 <main class="content">
     @include('layouts.admin.header')
-    @section('content')
-    @show
+    <div class="custom-content">
+        @section('content')
+        @show
+    </div>
     @include('layouts.admin.footer')
 </main>
 @section('scripts')

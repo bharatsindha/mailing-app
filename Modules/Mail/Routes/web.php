@@ -12,10 +12,13 @@
 */
 
 use Modules\Mail\Http\Controllers\DraftController;
+use Modules\User\Entities\User;
+
+$role = User::ADMIN_ROLE . ',' . User::USER_ROLE;
 
 Route::get('mail/img/{compose}', 'MailingController@emailOpenTrack')->name('openTrack.img');
 
-Route::prefix('mail')->middleware(['auth', 'check.role.web:admin'])->name('admin.')->group(function () {
+Route::prefix('mail')->middleware(['auth', "check.role.web:$role"])->name('admin.')->group(function () {
     Route::resource('drafts', DraftController::class);
     Route::post('uploadAttachment', 'AttachmentController@uploadAttachment')->name('draft.uploadAttachment');
     Route::post('removeAttachment', 'AttachmentController@removeAttachment')->name('draft.removeAttachment');

@@ -1,6 +1,6 @@
 @extends('layouts.admin.main')
 
-@section('title', 'Sent Report')
+@section('title', 'Email Report')
 
 @section('stylesheets')
     @parent
@@ -9,27 +9,47 @@
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <div class="d-block mb-4 mb-md-0">
-            <h2 class="h4">{{ __('Sent Report') }}</h2>
-            @include('layouts.admin.breadcrumb', ['module' => 'Sent Report'])
+            <h2 class="h4">{{ __('Email Report') }}</h2>
+            @include('layouts.admin.breadcrumb', ['module' => 'Email Report'])
         </div>
     </div>
     <div class="table-settings mb-4">
         <div class="row justify-content-between align-items-center">
-            <div class="col-9 col-lg-8 d-md-flex">
-                <form action="{{ url()->full() }}" method="get" id="get_data">
+            <form action="{{ url()->full() }}" method="get" id="get_data">
+                <div class="col-12 col-lg-12 d-md-flex">
                     @csrf
-                    <div class="input-group me-2 me-lg-3 fmxw-300">
-                    <span class="input-group-text">
-                        @include('icons.search')
-                    </span>
-                        <input type="text" name="q" id="q" class="form-control" placeholder="Search in Report"
+                    <div class="input-group me-2 me-lg-3 fmxw-200">
+                        <span class="input-group-text">@include('icons.search')</span>
+                        <input type="text" name="q" id="q" class="form-control" placeholder="Search in report"
                                autocomplete="off">
                     </div>
-                    <div class="input-group">
-                        <input type="hidden" name="page" id="page" class="form-control">
+                    <select class="form-select me-2 me-lg-3 fmxw-200" name="domain" id="domain">
+                        <option value="all">All domains</option>
+                        @foreach($domains as $key => $domain)
+                            <option value="{{ $domain['id'] }}">{{ $domain['name'] }}</option>
+                        @endforeach
+                    </select>
+                    <div class="input-group me-2 me-lg-3 fmxw-200">
+                        <span class="input-group-text"><i class="fa-solid fa-calendar"></i></span>
+                        <input data-datepicker="" class="form-control dropdown-toggle" id="from" name="from" type="text"
+                               placeholder="From">
                     </div>
-                </form>
-            </div>
+                    <div class="input-group me-2 me-lg-3 fmxw-200">
+                        <span class="input-group-text"><i class="fa-solid fa-calendar"></i></span>
+                        <input data-datepicker="" class="form-control dropdown-toggle" id="to" name="to" type="text"
+                               placeholder="To">
+                    </div>
+                    <input type="hidden" name="page" id="page" class="form-control">
+                    <div class="input-group me-2 me-lg-3 fmxw-300">
+                        <button class="btn btn-sm px-3 btn-primary btn-search-report">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                        <button class="btn btn-outline-gray-500 px-3 btn-reset-report">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </form>
             <div class="col-3 col-lg-4 d-flex justify-content-end"></div>
         </div>
     </div>
@@ -70,14 +90,15 @@
             $('form#get_data').submit();
         });
 
-        let typingTimer;
+        $(document).on('click', '.btn-search-report', function (event) {
+            event.preventDefault();
+            get_data_ajax();
+        });
 
-        $('#q').keyup(function () {
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(function () {
-                $('#page').val('1');
-                get_data_ajax();
-            }, 1000);
+        $(document).on('click', '.btn-reset-report', function (event) {
+            event.preventDefault();
+            $('form#get_data').trigger("reset");
+            get_data_ajax();
         });
 
     </script>

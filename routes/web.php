@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Modules\User\Entities\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('admin.domains.index');
+    return !is_null(Auth::user()) ?
+        (Auth::user()->role == User::ADMIN_ROLE
+            ? redirect()->route('admin.domains.index')
+            : redirect()->route('admin.drafts.index')) :
+        redirect()->route('login');
 })->name('home');
 
 require __DIR__ . '/auth.php';

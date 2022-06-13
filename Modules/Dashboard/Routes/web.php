@@ -11,8 +11,12 @@
 |
 */
 
+use Modules\User\Entities\User;
+
+$role = User::ADMIN_ROLE . ',' . User::USER_ROLE;
+
 Route::prefix('dashboard')
-    ->middleware(['auth', 'check.role.web:admin'])
+    ->middleware(['auth', "check.role.web:$role"])
     ->name('admin.')
     ->group(function () {
         Route::get('/', 'DashboardController@index')->name('dashboard');

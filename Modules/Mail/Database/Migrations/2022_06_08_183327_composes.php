@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->string('project_name', 100)->nullable();
             $table->string('company_name', 50)->nullable();
             $table->tinyInteger('status')->default(0)->index()
-                ->comment('0-not sent, 1-sent, 2-opened, 3-bounced');
+                ->comment('0-not sent, 1-sent, 2-opened, 3-bounced, 10-error in sending email');
             $table->dateTime('send_date')->nullable();
             $table->timestamps();
 //            $table->softDeletes();

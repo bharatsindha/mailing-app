@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Modules\User\Entities\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -38,7 +39,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended(
+            Auth::user()->role == User::ADMIN_ROLE ? RouteServiceProvider::HOME : RouteServiceProvider::USER_HOME
+        );
     }
 
     /**

@@ -47,7 +47,9 @@ class DraftController extends Controller
     public function sentReport(Request $request)
     {
         if (!(request()->ajax())) {
-            return view('mail::sentReport');
+            $domains = Domain::getDomainOptions();
+
+            return view('mail::sentReport', compact('domains'));
         }
 
         $results = Session::getSentSessions()->paginate(15);

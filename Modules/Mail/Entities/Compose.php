@@ -14,6 +14,7 @@ class Compose extends Model
     const SENT = 1;
     const OPENED = 2;
     const BOUNCED = 3;
+    const ERROR = 10;
 
     /**
      * @var array

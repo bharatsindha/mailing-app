@@ -2,7 +2,7 @@
     <div class="card-body">
         <div class="table-responsive">
             @if (count($results) > 0)
-                <table class="table table-centered table-nowrap mb-0 rounded" style="min-height: 25vh;">
+                <table class="table table-centered table-nowrap mb-0 rounded">
                     <thead class="thead-light">
                     <tr>
                         <th class="border-0 rounded-start">{{ __('#') }}</th>
@@ -42,20 +42,13 @@
                             <td>
                                 <div class="text-end">
                                     <div class="btn-group">
-                                        <button
-                                            class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0"
-                                            data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            @include('icons.action-toggle')
-                                        </button>
-                                        <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1"
-                                             style="">
-                                            <a class="dropdown-item d-flex align-items-center"
-                                               href="{{ route('admin.drafts.show', $result->id) }}">
-                                                @include('icons.view')
-                                                View Draft
-                                            </a>
-                                        </div>
+                                        <a class=" d-flex align-items-center"
+                                           href="{{ route('admin.drafts.show', $result->id) }}">
+                                            <span class="dropdown-icon text-gray-400 me-2">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </span>
+                                            View Details
+                                        </a>
                                     </div>
                                 </div>
                             </td>

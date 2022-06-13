@@ -11,8 +11,11 @@
 |
 */
 
+use Modules\User\Entities\User;
 use Modules\User\Http\Controllers\UserController;
 
-Route::middleware(['auth', 'check.role.web:admin'])->name('admin.')->group(function () {
+$role = User::ADMIN_ROLE;
+
+Route::middleware(['auth', "check.role.web:$role"])->name('admin.')->group(function () {
     Route::resource('users', UserController::class);
 });

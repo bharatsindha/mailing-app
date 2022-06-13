@@ -17,7 +17,12 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/domains';
+    const HOME = '/domains';
+
+    /**
+     * The path to the "home" route for user role.
+     */
+    const USER_HOME = '/mail/drafts';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

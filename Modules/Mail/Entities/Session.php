@@ -2,11 +2,13 @@
 
 namespace Modules\Mail\Entities;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Modules\Domain\Entities\Domain;
 use Modules\Email\Entities\Email;
 
@@ -56,7 +58,7 @@ class Session extends Model
      */
     public static function getModelObj()
     {
-        return self::select(['sessions.*', 'domains.name', 'emails.sender_email'])
+        return self::select(['sessions.*', 'domains.name', 'emails.sender_email', 'emails.sender_name'])
             ->join((new Domain())->getTable(), 'sessions.domain_id', (new Domain())->getTable() . '.id')
             ->join((new Email())->getTable(), 'sessions.email_id', (new Email())->getTable() . '.id')
             ->when(request()->filled('q'), function ($q) {
@@ -72,9 +74,28 @@ class Session extends Model
             ->orderBy('sessions.id', 'desc');
     }
 
+    /**
+     * Get the sent sessions
+     *
+     * @return mixed
+     */
     public static function getSentSessions()
     {
-        return self::getModelObj()->whereIn('sessions.is_completed', [self::COMPLETED]);
+        return self::getModelObj()
+            ->when(request()->filled('domain'), function ($domain) {
+                if (request()->input('domain') > 0 && request()->input('domain') != 'all') {
+                    $domain->where('domains.id', request()->input('domain'));
+                }
+            })
+            ->when(request()->filled('from') && request()->filled('to'), function ($domain) {
+                if (!is_null(request()->input('from')) && !is_null(request()->input('to'))) {
+                    $domain->whereBetween(DB::raw('date(sessions.created_at)'), [
+                        Carbon::parse(request()->input('from'))->toDateString(),
+                        Carbon::parse(request()->input('to'))->toDateString()
+                    ]);
+                }
+            })
+            ->whereIn('sessions.is_completed', [self::COMPLETED]);
     }
 
     /**

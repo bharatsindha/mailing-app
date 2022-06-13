@@ -6,7 +6,7 @@
                         class="sidebar-toggle me-3 btn btn-icon-only d-none d-lg-inline-block align-items-center justify-content-center">
                     @include('icons.toggle-2')
                 </button>
-                <form class="navbar-search form-inline" id="navbar-search-main">
+                {{--<form class="navbar-search form-inline" id="navbar-search-main">
                     <div class="input-group input-group-merge search-bar">
                         <span class="input-group-text" id="topbar-addon">
                             @include('icons.search')
@@ -14,7 +14,7 @@
                         <input type="text" class="form-control" id="topbarInputIconLeft" placeholder="Search"
                                aria-label="Search" aria-describedby="topbar-addon">
                     </div>
-                </form>
+                </form>--}}
             </div>
             <!-- Navbar links -->
             <ul class="navbar-nav align-items-center">

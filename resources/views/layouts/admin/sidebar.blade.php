@@ -43,26 +43,25 @@
                     <span class="sidebar-text">Dashboard</span>
                 </a>
             </li>--}}
-            <li class="nav-item {{ (request()->is('domains') || request()->is('domains/*')) ? 'active' : '' }}">
-                <a href="{{ route('admin.domains.index') }}" class="nav-link">
+            @if(\Illuminate\Support\Facades\Auth::user()->role == \Modules\User\Entities\User::ADMIN_ROLE)
+                <li class="nav-item {{ (request()->is('domains') || request()->is('domains/*')) ? 'active' : '' }}">
+                    <a href="{{ route('admin.domains.index') }}" class="nav-link">
+                        <span class="sidebar-icon">
+                            @include('icons.dashboard')
+                        </span>
+                        <span class="sidebar-text">Domains</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ (request()->is('emails') || request()->is('emails/*')) ? 'active' : '' }}">
+                    <a href="{{ route('admin.emails.index') }}" class="nav-link">
                     <span class="sidebar-icon">
-                        @include('icons.dashboard')
-                    </span>
-                    <span class="sidebar-text">Domains</span>
-                </a>
-            </li>
-            <li class="nav-item {{ (request()->is('emails') || request()->is('emails/*')) ? 'active' : '' }}">
-                <a href="{{ route('admin.emails.index') }}" class="nav-link">
-                    <span class="sidebar-icon">
-{{--                        @include('icons.users')--}}
                         <i class="fa-solid fa-at"></i>
                     </span>
-                    <span class="sidebar-text">Sender Emails</span>
-                </a>
-            </li>
-
+                        <span class="sidebar-text">Sender Emails</span>
+                    </a>
+                </li>
+            @endif
             <li class="nav-item">
-                {{--collapsed, aria-expanded="true", show --}}
                 <span
                     class="nav-link d-flex justify-content-between align-items-center {{ !(request()->is('mail/*') ) ? 'collapsed' : '' }}"
                     data-bs-toggle="collapse" data-bs-target="#submenu-pages"
@@ -83,33 +82,47 @@
                     <ul class="flex-column nav">
                         <li class="nav-item {{ (request()->is('*/drafts') || request()->is('*/drafts/*')) ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('admin.drafts.index') }}">
-                                <span class="sidebar-text-contracted">D</span>
-                                <span class="sidebar-text">Drafts</span>
+                                <span class="sidebar-text-contracted">
+                                    <span class="sidebar-icon"><i class="fa-solid fa-pen-to-square"></i></span>
+                                </span>
+                                <span class="sidebar-text">
+                                    <span class="sidebar-icon"><i class="fa-solid fa-pen-to-square"></i></span> Drafts
+                                </span>
                             </a>
                         </li>
                         <li class="nav-item {{ (request()->is('*/bounceTrack') || request()->is('*/bounceTrack/*')) ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('admin.mail.bounceTrack') }}">
-                                <span class="sidebar-text-contracted">B</span>
-                                <span class="sidebar-text">Bounce Track</span>
+                                <span class="sidebar-text-contracted">
+                                    <span class="sidebar-icon"><i class="fa-solid fa-filter"></i></span>
+                                </span>
+                                <span class="sidebar-text">
+                                    <span class="sidebar-icon"><i class="fa-solid fa-filter"></i></span> Bounce Track
+                                </span>
                             </a>
                         </li>
                         <li class="nav-item {{ (request()->is('*/sentReport') || request()->is('*/sentReport/*')) ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('admin.mail.sentReport') }}">
-                                <span class="sidebar-text-contracted">S</span>
-                                <span class="sidebar-text">Sent Report</span>
+                                <span class="sidebar-text-contracted">
+                                    <span class="sidebar-icon"><i class="fa-solid fa-table"></i></span>
+                                </span>
+                                <span class="sidebar-text">
+                                    <span class="sidebar-icon"><i class="fa-solid fa-table"></i></span>Email Report
+                                </span>
                             </a>
                         </li>
                     </ul>
                 </div>
             </li>
-            <li class="nav-item {{ (request()->is('users') || request()->is('users/*')) ? 'active' : '' }}">
-                <a href="{{ route('admin.users.index') }}" class="nav-link">
+            @if(\Illuminate\Support\Facades\Auth::user()->role == \Modules\User\Entities\User::ADMIN_ROLE)
+                <li class="nav-item {{ (request()->is('users') || request()->is('users/*')) ? 'active' : '' }}">
+                    <a href="{{ route('admin.users.index') }}" class="nav-link">
                     <span class="sidebar-icon">
                         @include('icons.users')
                     </span>
-                    <span class="sidebar-text">Users</span>
-                </a>
-            </li>
+                        <span class="sidebar-text">Users</span>
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
 </nav>

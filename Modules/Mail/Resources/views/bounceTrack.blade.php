@@ -4,6 +4,28 @@
 
 @section('stylesheets')
     @parent
+    <style>
+        .main-spinner {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: none;
+        }
+
+        .overlay {
+            position: fixed;
+            display: none;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #000;
+            z-index: 2;
+            opacity: 0.2;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -37,7 +59,8 @@
     <input type="hidden" name="currentSenderEmail" id="currentSenderEmail" value="">
     <input type="hidden" name="currentDomainId" id="currentDomainId" value="">
     <input type="hidden" name="connectionType" id="connectionType" value="bounce track">
-    <div class="ajax-content"></div>
+    <div class="ajax-content">
+    </div>
 @endsection
 
 @section('scripts')
@@ -45,14 +68,16 @@
 
     <script>
 
+        /**
+         * Start bounce tracking
+         **/
         function startBounceTracking() {
-
-            console.log("started bounce tracking");
-
             let emailId = $("#currentEmailId").val();
             let currentSenderEmail = $("#currentSenderEmail").val();
 
             if (emailId > 0) {
+                toggleSpinner('flex');
+
                 let bounceTrackUrl = "{{ route('admin.mail.bounceTracking', 'EMAIL_ID') }}";
                 bounceTrackUrl = bounceTrackUrl.replace('EMAIL_ID', emailId);
 
@@ -63,11 +88,11 @@
                         '_token': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
-                        // console.log(response, "response")
                         if (response.status === 'notConnected') {
                             let domainId = $("#currentDomainId").val();
                             syncGMailConnection(domainId);
                         } else {
+                            toggleSpinner('none');
                             notyf.open({
                                 type: 'success',
                                 message: 'Bounce tracked successfully for the email ' + currentSenderEmail
@@ -75,19 +100,27 @@
                         }
                     },
                     error: function () {
+                        toggleSpinner('none');
                         notyf.open({
                             type: 'danger',
                             message: 'Something went wrong. Please try later.'
                         });
                     }
                 });
-
             } else {
                 notyf.open({
                     type: 'danger',
                     message: 'System could not recognize email. Please try later.'
                 });
             }
+        }
+
+        /**
+         * Spinner toggle
+         **/
+        function toggleSpinner(display) {
+            $(".overlay").css('display', display);
+            $(".main-spinner").css('display', display);
         }
 
         /**
@@ -125,7 +158,7 @@
          **/
         function syncGMailConnection(domainId) {
             setCookie("tempDomainId", domainId, 1);
-            PopupCenterDual("{{ route('admin.mail.connection') }}", 'GMail login page', '450', '450');
+            new PopupCenterDual("{{ route('admin.mail.connection') }}", 'GMail login page', '450', '450');
         }
 
         /**

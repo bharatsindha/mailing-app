@@ -105,6 +105,11 @@ class MailingController extends Controller
         $senderEmail = $user->email;
         $senderName = $user->name;
 
+        if (trim($session->email->sender_email) != trim($senderEmail)) {
+            $status = "emailNotMatch";
+            goto End;
+        }
+
         $sessionData = Session::getPendingSessionData($session->id);
 
         $status = is_null($sessionData['composes_pending']) ? 'completed' : 'pending';
@@ -161,7 +166,6 @@ class MailingController extends Controller
             alt="unsubscribe">', $strMailContent);*/
 
         $strMailContent .= '<img src="' . route('openTrack.img', $composeId) . '" alt="unsubscribe">';
-//        $strMailContent .= '<img src="http://1bc6-2409-4041-e9c-528c-de6b-5b85-a504-1733.in.ngrok.io/mail/img/' . $composeId . '" alt="unsubscribe">';
 
         $strSubject = $subject;
         $strSubject = str_replace("{{firstName}}", $receiverFirstName, $strSubject);
@@ -237,6 +241,11 @@ class MailingController extends Controller
             $status = 'sent';
             goto End;
         } catch (Throwable $e) {
+
+            $compose = Compose::find($composeId);
+            $compose->status = Compose::ERROR;
+            $compose->save();
+
             $status = 'error';
             goto End;
         }
@@ -379,13 +388,13 @@ class MailingController extends Controller
                             let redirectLink = '" . route('admin.mail.startMailing', 'SESSION_ID') . "';
                              redirectLink = redirectLink.replace('SESSION_ID', currentSessionIdOpener);
 
-                             window.opener.open(redirectLink,'_blank');
+                             window.opener.open(redirectLink,'_self');
                         } else {
                             window.opener.startBounceTracking();
                         }
                     }else{
-                      alert('Logged In Email ID is different than Sender Email ID.Please login with '+
-                      currentSenderEmailOpener+' Email ID.');
+                      window.opener.alert('Logged in GMail ID is different than your sender email. Please login with '+
+                      currentSenderEmailOpener+' email in GMail.');
                       if(connectionType === 'send email'){
                           window.opener.location.href = '" . route('admin.drafts.index') . "?logout=1';
                       } else {
