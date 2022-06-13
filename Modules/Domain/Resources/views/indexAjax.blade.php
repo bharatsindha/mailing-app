@@ -1,7 +1,8 @@
-<div class="card border-0 shadow mb-4">
-    <div class="card-body">
-        <div class="table-responsive">
-            @if (count($results) > 0)
+@if (count($results) > 0)
+    <div class="card border-0 shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+
                 <table class="table table-centered table-nowrap mb-0 rounded" style="min-height: 30vh;">
                     <thead class="thead-light">
                     <tr>
@@ -40,13 +41,10 @@
                         {{ $results->links('pagination.bootstrap-5') }}
                     </div>
                 </div>
-            @else
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
-                    <div class="d-block mb-4 mb-md-0 w-100 text-center">
-                        <h4>{{ __('No results found') }}</h4>
-                    </div>
-                </div>
-            @endif
+
+            </div>
         </div>
     </div>
-</div>
+@else
+    @include('notFound.searchNotFound', ['message' => "We're sorry what you were looking for. Please add new domain."])
+@endif

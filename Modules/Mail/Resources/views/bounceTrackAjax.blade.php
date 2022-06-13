@@ -1,14 +1,11 @@
-<div class="card border-0 shadow mb-4">
-    <div class="card-body">
-        {{--<div class="main-spinner">
-            <div class="spinner-border" role="status"></div>
-        </div>--}}
-        <div class="table-responsive">
-            <div class="main-spinner w-100 justify-content-center align-items-center">
-                <div class="spinner-border"></div>
-            </div>
-            <div class="overlay"></div>
-            @if (count($results) > 0)
+@if (count($results) > 0)
+    <div class="card border-0 shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive bounce-tracking-spinner">
+                <div class="main-spinner w-100 justify-content-center align-items-center">
+                    <div class="spinner-border"></div>
+                </div>
+                <div class="overlay"></div>
                 <table class="table table-centered table-nowrap mb-0 rounded">
                     <thead class="thead-light">
                     <tr>
@@ -53,13 +50,9 @@
                         {{ $results->links('pagination.bootstrap-5') }}
                     </div>
                 </div>
-            @else
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
-                    <div class="d-block mb-4 mb-md-0 w-100 text-center">
-                        <h4>{{ __('No results found') }}</h4>
-                    </div>
-                </div>
-            @endif
+            </div>
         </div>
     </div>
-</div>
+@else
+    @include('notFound.searchNotFound', ['message' => "We're sorry what you were looking for. Please add new sender email."])
+@endif

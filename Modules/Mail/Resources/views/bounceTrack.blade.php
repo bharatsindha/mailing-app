@@ -4,28 +4,6 @@
 
 @section('stylesheets')
     @parent
-    <style>
-        .main-spinner {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: none;
-        }
-
-        .overlay {
-            position: fixed;
-            display: none;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #000;
-            z-index: 2;
-            opacity: 0.2;
-        }
-    </style>
 @endsection
 
 @section('content')

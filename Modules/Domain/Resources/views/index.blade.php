@@ -47,8 +47,6 @@
     <script>
         function get_data_ajax() {
             let form = $('form#get_data');
-
-            console.log("working here");
             $.ajax({
                 type: form.attr('method'),
                 url: form.attr('action'),

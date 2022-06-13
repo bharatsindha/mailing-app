@@ -19,7 +19,6 @@ class DomainController extends Controller
      */
     public function index()
     {
-
         if (!(request()->ajax())) {
             return view('domain::index');
         }
