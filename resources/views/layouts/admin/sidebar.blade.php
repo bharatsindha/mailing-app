@@ -28,11 +28,11 @@
             <li class="nav-item">
                 <a href="{{ route('home') }}" class="nav-link d-flex align-items-center">
                     <span class="sidebar-icon">
-                    {{--<img src="{{ asset('img/logo.png') }}" height="20" width="20"
-                         alt="Volt Logo">--}}
-                        <i class="fa-solid fa-envelope"></i>
+                    <img src="{{ asset('img/logo.png') }}" height="20" width="20"
+                         alt="Volt Logo">
+{{--                        <i class="fa-solid fa-envelope"></i>--}}
                     </span>
-                    <span class="mt-1 ms-1 sidebar-text">{{ strtoupper(env('APP_NAME'))  }}</span>
+                    <span class="mt-1 ms-1 sidebar-text">{{ (env('APP_NAME'))  }}</span>
                 </a>
             </li>
             {{--<li class="nav-item  {{ (request()->is('dashboard') || request()->is('dashboard/*')) ? 'active' : '' }}">
