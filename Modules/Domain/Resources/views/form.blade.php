@@ -26,8 +26,6 @@
     </div>
 </div>
 
-<h2 class="h5 mb-4 mt-3">{{ __('Gmail API Configuration: ') }}</h2>
-
 @include('domain::gmailInfo')
 
 <div class="row">

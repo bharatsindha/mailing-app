@@ -27,3 +27,6 @@
     z-index: 2;
     opacity: 0.2;
 }
+.gmail-config p, .gmail-config ol li, .gmail-config ul li{
+    font-size: 0.827rem;
+}
