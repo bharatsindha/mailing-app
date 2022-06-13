@@ -49,7 +49,7 @@
 
 # Modules
 
-## Domain
+## Domain Module
 - This module use to manage domain. It allows to add/edit/delete the domain.
 - Before adding the domain, it must be enabled GMail API. Please follow below steps to enable GMail API.
 
@@ -86,3 +86,17 @@ Any application that uses OAuth 2.0 to access GMail API must have authorization 
 
 - You're done!
 
+## Email Module
+This module use to manage sender emails for the domain. It allows to add/edit/delete the sender emails for the domain.
+
+## Mail Module
+This module use to Draft mail, send emails, open tracking, and bounce tracking.
+
+Sub-modules:
+
+1. Drafts & Mailing
+2. Bounce Track
+3. Sent Email Report
+
+## User Module
+This module use to manage the users by role. It allows to add/edit/delete users.
