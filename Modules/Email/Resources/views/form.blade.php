@@ -9,7 +9,7 @@
                 <option value="{{ $domain['id'] }}"
                     {{ ((isset($result->domain_id) && $result->domain_id === $domain['id']) ||
                         ((old('domain_id') == $domain['id']))) ? 'selected' : '' }}>
-                    {{ $domain['name'] . ' (' . $domain['url'] . ')' }}
+                    {{ $domain['name'] . ' <' . $domain['url'] . '>' }}
                 </option>
             @endforeach
         </select>

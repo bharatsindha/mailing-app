@@ -1,6 +1,6 @@
 <div class="gmail-config">
-    <h2 class="h5 mb-2 mt-3 fw-bold">Enable GMail API for the domain:</h2>
-    <p>Any application that calls GMail APIs needs to be enabled in the API Console.</p>
+    <h2 class="h5 mb-2 mt-4 fw-bold text-secondary">Enable GMail API for the domain:</h2>
+    <p class="text-dark">Any application that calls GMail APIs needs to be enabled in the API Console.</p>
     <p>To enable an API for the domain:</p>
     <ul>
         <li>
@@ -13,7 +13,7 @@
         <li>If prompted, read and accept the API's Terms of Service.</li>
     </ul>
 
-    <h5 class="mt-4">Create authorization credentials:</h5>
+    <h5 class="mt-4 text-secondary">Create authorization credentials:</h5>
     <p>Any application that uses OAuth 2.0 to access GMail API must have authorization credentials that identify the
         application to Google's OAuth 2.0 server. The following steps explain how to create credentials for the domain.
         Then add the credentials(Client ID & Client Secret) below to access API for sending email, bounce tracking for

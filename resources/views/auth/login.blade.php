@@ -26,7 +26,8 @@
                     <div
                         class="signin-inner my-3 my-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100">
                         <div class="text-center mb-3">
-                            <a href="{{ route('admin.dashboard') }}"><img alt="" src="{{ asset('img/logo.png') }}"></a>
+                            <a href="{{ route('admin.dashboard') }}">
+                                <img alt="" src="{{ asset('img/dark.svg') }}" style="width: 2rem; height: auto;"></a>
                         </div>
                         <h1 class="h3 text-center">Login</h1>
 

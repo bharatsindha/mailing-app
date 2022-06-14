@@ -53,28 +53,28 @@
                     <h2 class="fs-5 fw-bold mb-0">{{ __('Dynamic Variables') }}</h2>
                 </div>
                 <div class="card-body">
-                    <p>Please use these variables in subject or mail content to replace the receiver details
-                        dynamic.</p>
+                    <p><small>Please use these variables in subject or mail content to replace the receiver details
+                            dynamic.</small></p>
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('First Name') }}</label>
-                            <div class="small text-gray"><code>@{{firstName}}</code></div>
+                            <div class="small text-gray">@{{firstName}}</div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Last Name') }}</label>
-                            <div class="small text-gray"><code>@{{lastName}}</code></div>
+                            <div class="small text-gray">@{{lastName}}</div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Company Name') }}</label>
-                            <div class="small text-gray"><code>@{{company}}</code></div>
+                            <div class="small text-gray">@{{company}}</div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Designation') }}</label>
-                            <div class="small text-gray"><code>@{{designation}}</code></div>
+                            <div class="small text-gray">@{{designation}}</div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Project Name') }}</label>
-                            <div class="small text-gray"><code>@{{project}}</code></div>
+                            <div class="small text-gray">@{{project}}</div>
                         </div>
                     </div>
                 </div>

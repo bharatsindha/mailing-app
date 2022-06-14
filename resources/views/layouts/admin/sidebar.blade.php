@@ -28,9 +28,8 @@
             <li class="nav-item">
                 <a href="{{ route('home') }}" class="nav-link d-flex align-items-center">
                     <span class="sidebar-icon">
-                    <img src="{{ asset('img/logo.png') }}" height="20" width="20"
-                         alt="Volt Logo">
-{{--                        <i class="fa-solid fa-envelope"></i>--}}
+                    <img src="{{ asset('img/light.svg') }}" height="20" width="20"
+                         alt="Mailing Logo">
                     </span>
                     <span class="mt-1 ms-1 sidebar-text">{{ (env('APP_NAME'))  }}</span>
                 </a>

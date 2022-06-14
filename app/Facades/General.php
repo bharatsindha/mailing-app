@@ -19,7 +19,7 @@ Class General extends Facade
     {
         if (is_null($date) || empty($date)) return null;
 
-        return Carbon::parse($date)->toDateString();
+        return Carbon::parse($date)->format('d M Y');
     }
 
     /**
@@ -32,7 +32,7 @@ Class General extends Facade
     {
         if (is_null($date) || empty($date)) return null;
 
-        return Carbon::parse($date)->toDateTimeString();
+        return Carbon::parse($date)->format('d M Y, H:i a');
     }
 
     /**
@@ -103,13 +103,13 @@ Class General extends Facade
     public static function getDraftBadgeClass($status)
     {
         if ($status === Session::YET_TO_START) {
-            return 'primary';
+            return 'secondary';
         } else if ($status === Session::IN_PROCESS) {
             return 'info';
         } else if ($status === Session::COMPLETED) {
             return 'success';
         } else {
-            return 'primary';
+            return 'secondary';
         }
     }
 

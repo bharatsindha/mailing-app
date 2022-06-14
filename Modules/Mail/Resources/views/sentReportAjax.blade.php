@@ -30,20 +30,20 @@
                             <td>
                                 <span>{{ strlen($result->subject) > 40 ? substr($result->subject, 0, 40) . '...' : $result->subject }}</span>
                             </td>
-                            <td><span>{{ $result->total_emails }}</span></td>
-                            <td><span>{{ $result->total_sent }}</span></td>
-                            <td><span>{{ $result->composesOpened()->count() }}</span></td>
-                            <td><span>{{ $result->composesBounced()->count() }}</span></td>
+                            <td><span class="text-primary">{{ $result->total_emails }}</span></td>
+                            <td><span class="text-success">{{ $result->total_sent }}</span></td>
+                            <td><span class="text-success">{{ $result->composesOpened()->count() }}</span></td>
+                            <td><span class="text-danger">{{ $result->composesBounced()->count() }}</span></td>
                             <td>
                                 <span>
-                                    {{ \App\Facades\General::dateFormat($result->created_at) }}
+                                    {{ \App\Facades\General::datetimeFormat($result->created_at) }}
                                 </span>
                             </td>
                             <td>
                                 <div class="text-end">
                                     <div class="btn-group">
                                         <a class=" d-flex align-items-center"
-                                           href="{{ route('admin.drafts.show', $result->id) }}">
+                                           href="{{ route('admin.mail.sentReportDetails', $result->id) }}">
                                             <span class="dropdown-icon text-gray-400 me-2">
                                                 <i class="fa-solid fa-eye"></i>
                                             </span>

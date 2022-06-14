@@ -2,18 +2,6 @@
 @section('title', 'Drafts')
 @section('stylesheets')
     @parent
-    <style>
-        .mail-content-view {
-            background-color: #F2F4F6;
-            display: block;
-            padding: 20px;
-            color: inherit;
-            border-radius: 8px;
-        }
-        .mail-content-view p {
-            font-size: 0.827rem;
-        }
-    </style>
 @endsection
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -21,6 +9,7 @@
             <h2 class="h4">{{ __('Draft Details') }}</h2>
             @include('layouts.admin.breadcrumb', ['module' => 'Drafts'])
         </div>
+        @include('actions.form_actions', ['back' => true])
     </div>
     <div class="row">
         <div class="col-12 col-xl-8">
@@ -30,34 +19,43 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Domain Name') }}</label>
-                            <div class="small text-gray">{{ $session->domain->name }}</div>
+                            <div class="small text-gray">
+                                <span class="form-field-view2">{{ $session->domain->name }}</span>
+                            </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Sender Email') }}</label>
                             <div class="small text-gray">
+                                <span class="form-field-view2">
                                 {{ $session->email->sender_name .'<' .$session->email->sender_email . '>' }}
+                                </span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-12 mb-4">
                             <label for="name">{{ __('Subject') }}</label>
-                            <div class="small text-gray">{{ $session->subject }}</div>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <label for="name">{{ __('Mail Content') }}</label>
                             <div class="small text-gray">
-                                <code class="mail-content-view">
-                                    {!! $session->mail_content !!}
-                                </code>
+                                <span class="form-field-view2">{{ $session->subject }}</span>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-4">
+                            <label for="name">{{ __('Mail Content') }}</label>
+                            <div class="small text-gray">
+                                <span class="mail-content-view">
+                                    {!! $session->mail_content !!}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Created At') }}</label>
-                            <div
-                                class="small text-gray">{{ \App\Facades\General::dateFormat($session->created_at) }}</div>
+                            <div class="small text-gray">
+                                <span class="form-field-view2">
+                                    {{ \App\Facades\General::dateFormat($session->created_at) }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -70,10 +68,10 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-12 mb-4">
                             <div class="small text-gray">
                             <span
-                                class="badge badge-lg bg-{{ \App\Facades\General::getDraftBadgeClass($session->is_completed) }}">
+                                class="badge badge-lg fs-827 bg-{{ \App\Facades\General::getDraftBadgeClass($session->is_completed) }}">
                                 {{ \App\Facades\General::getDraftStatus($session->is_completed) }}
                             </span>
                             </div>
@@ -87,21 +85,29 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Total Emails') }}</label>
-                            <div class="small text-gray">{{ $session->total_emails }}</div>
+                            <div class="small text-gray">
+                                <span class="text-primary">{{ $session->total_emails }}</span>
+                            </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Total Sent') }}</label>
-                            <div class="small text-gray">{{ $session->total_sent }}</div>
+                            <div class="small text-gray">
+                                <span class="text-success">{{ $session->total_sent }}</span>
+                            </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Total Opened') }}</label>
-                            <div class="small text-gray">{{ $session->composesOpened()->count() }}</div>
+                            <div class="small text-gray">
+                                <span class="text-success">{{ $session->composesOpened()->count() }}</span>
+                            </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Total Bounced') }}</label>
-                            <div class="small text-gray">{{ $session->composesBounced()->count() }}</div>
+                            <div class="small text-gray">
+                                <span class="text-danger">{{ $session->composesBounced()->count() }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -112,7 +118,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-12 mb-4">
                             <ul class="list-group list-group-flush">
                                 @if($session->attachments()->count())
                                     @foreach($session->attachments as $key => $attachment)
@@ -162,8 +168,6 @@
             </div>
         </div>
     </div>
-
-    @include('actions.form_actions', ['back' => true])
 
 @endsection
 @section('scripts')

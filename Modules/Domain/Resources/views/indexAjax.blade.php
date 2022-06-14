@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="table-responsive">
 
-                <table class="table table-centered table-nowrap mb-0 rounded" style="min-height: 30vh;">
+                <table class="table table-centered table-nowrap mb-0 rounded">
                     <thead class="thead-light">
                     <tr>
                         <th class="border-0 rounded-start">{{ __('#') }}</th>

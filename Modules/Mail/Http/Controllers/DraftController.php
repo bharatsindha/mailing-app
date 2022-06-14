@@ -110,6 +110,23 @@ class DraftController extends Controller
     }
 
     /**
+     * Show sent details
+     *
+     * @param $sessionId
+     * @return Factory|View
+     */
+    public function sentReportDetails($sessionId)
+    {
+        if (!(request()->ajax())) {
+            return view('mail::sentDetails', compact('sessionId'));
+        }
+
+        $results = Session::getSentDetails($sessionId)->paginate(100);
+
+        return view('mail::sentDetailsAjax', compact('results'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param $id

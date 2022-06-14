@@ -2,7 +2,7 @@
     <div class="card-body">
         <div class="table-responsive">
             @if (count($results) > 0)
-                <table class="table table-centered table-nowrap mb-0 rounded" style="min-height: 30vh;">
+                <table class="table table-centered table-nowrap mb-0 rounded">
                     <thead class="thead-light">
                     <tr>
                         <th class="border-0 rounded-start">{{ __('#') }}</th>
@@ -19,7 +19,7 @@
                             <td><span class="font-weight-bold">{{ $result->id }}</span></td>
                             <td><span>{{ $result->name }}</span></td>
                             <td><span>{{ $result->email }}</span></td>
-                            <td><span>{{ ucfirst($result->role) }}</span></td>
+                            <td><span class="badge bg-secondary">{{ ucfirst($result->role) }}</span></td>
                             <td>
                                 <span>
                                     {{ \App\Facades\General::dateFormat($result->created_at) }}

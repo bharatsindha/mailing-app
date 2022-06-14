@@ -32,12 +32,12 @@
                     <div class="input-group me-2 me-lg-3 fmxw-200">
                         <span class="input-group-text"><i class="fa-solid fa-calendar"></i></span>
                         <input data-datepicker="" class="form-control dropdown-toggle" id="from" name="from" type="text"
-                               placeholder="From">
+                               placeholder="From" value="{{ \Carbon\Carbon::today()->subDays(7)->format('m/d/Y') }}">
                     </div>
                     <div class="input-group me-2 me-lg-3 fmxw-200">
                         <span class="input-group-text"><i class="fa-solid fa-calendar"></i></span>
                         <input data-datepicker="" class="form-control dropdown-toggle" id="to" name="to" type="text"
-                               placeholder="To">
+                               placeholder="To" value="{{ \Carbon\Carbon::today()->format('m/d/Y') }}">
                     </div>
                     <input type="hidden" name="page" id="page" class="form-control">
                     <div class="input-group me-2 me-lg-3 fmxw-300">

@@ -18,35 +18,46 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-4">
                             <label for="name">{{ __('Domain Name') }}</label>
                             <div class="small text-gray">{{ $result->name }}</div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-4">
                             <label for="name">{{ __('Domain Url') }}</label>
                             <div class="small text-gray">{{ $result->url }}</div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 mb-3">
-                            <label for="name">{{ __('Gmail client ID') }}</label>
-                            <div class="small text-gray"><code>{{ ucfirst($result->client_id) }}</code></div>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <label for="name">{{ __('Gmail client secret') }}</label>
-                            <div class="small text-gray"><code>{{ ucfirst($result->client_secret) }}</code></div>
-                        </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-12 col-md-4 mb-4">
                             <label for="name">{{ __('Created At') }}</label>
                             <div
                                 class="small text-gray">{{ \App\Facades\General::dateFormat($result->created_at) }}</div>
                         </div>
                     </div>
-                    @include('actions.form_actions', ['back' => true])
+                    <div class="row">
+                        <div class="col-12 col-md-12 mb-3">
+                            <h2 class="fs-5 fw-bold mb-0 mt-3">{{ __('GMail Details') }}</h2>
+                        </div>
+                        <div class="col-12 col-md-12 mb-4">
+                            <label for="name">{{ __('Client ID') }}</label>
+                            <div class="small text-gray">
+                                <span class="badge badge-lg fs-827 bg-gray-500 text-break text-start">
+                                    {{ $result->client_id }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 mb-4">
+                            <label for="name">{{ __('Client secret') }}</label>
+                            <div class="small text-gray">
+                                <span class="badge badge-lg fs-827 bg-gray-500 text-break text-start">
+                                    {{ $result->client_secret }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            @include('actions.form_actions', ['back' => true])
         </div>
-        <div class="col-12 col-xl-4"></div>
     </div>
 @endsection
 @section('scripts')

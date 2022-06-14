@@ -18,21 +18,23 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Name') }}</label>
                             <div class="small text-gray">{{ $result->name }}</div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Email') }}</label>
                             <div class="small text-gray">{{ $result->email }}</div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Role') }}</label>
-                            <div class="small text-gray">{{ ucfirst($result->role) }}</div>
+                            <div class="small text-gray">
+                                <span class="badge bg-secondary">{{ ucfirst($result->role) }}</span>
+                            </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Created At') }}</label>
                             <div
                                 class="small text-gray">{{ \App\Facades\General::dateFormat($result->created_at) }}</div>

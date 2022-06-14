@@ -15,30 +15,36 @@
     </div>
     <div class="row">
         <div class="col-12 col-xl-12">
-            <div class="card card-body bg-transparent mb-4">
+            <div class="card card-body bg-yellow-100 shadow border-0 mb-4">
                 <div class="row">
-                    <div class="col-md-3">
-                        <strong>Domain: </strong>
-                        {{$session->domain->name}}
-                    </div>
-                    <div class="col-md-5">
-                        <strong>Sender Email: </strong>
-                        {{$session->email->sender_name . '<'. $session->email->sender_email. '>'}}
+                    <div class="col-md-8">
+                        <span>Domain:</span>
+                        <strong class="fw-extrabold">
+                            {{$session->domain->name . '<'. $session->domain->url . '>'}}
+                        </strong>
                     </div>
                     <div class="col-md-2">
-                        <strong>Total Email: </strong>{{ $session->total_emails }}
+                        <span>Total Email: </span>
+                        <strong class="fw-extrabold">{{ $session->total_emails }}</strong>
                     </div>
                     <div class="col-md-2">
-                        <strong>Total Sent: </strong>
-                        <label id="totalSent">0</label>
+                        <span>Total Sent: </span>
+                        <strong class="fw-extrabold"><label id="totalSent">0</label></strong>
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-10">
-                        <strong>Subject: </strong>{{ $session->subject }}
+                    <div class="col-md-4">
+                        <span>Sender Email: </span>
+                        <strong class="fw-extrabold">
+                            {{$session->email->sender_name . '<'. $session->email->sender_email. '>'}}
+                        </strong>
+                    </div>
+                    <div class="col-md-6">
+                        <span>Subject: </span>
+                        <strong class="fw-extrabold">{{ $session->subject }}</strong>
                     </div>
                     <div class="col-md-2">
-                        <a class="btn btn-outline-gray-500 animate-up-2" target="_blank"
+                        <a class="text-decoration-underline" target="_blank"
                            href="{{ route('admin.drafts.show', $session->id) }}">View more details</a>
                     </div>
                 </div>
@@ -115,7 +121,7 @@
                         }, rand);
                     } else {
                         $('#mailingTable tr').last().after('<tr>' +
-                            '<td colspan="5" class="text-center"> <b>Completed</b> </td>' +
+                            '<td colspan="5" class="text-center text-success"> <b>Completed</b> </td>' +
                             '</tr>');
                     }
                 },
@@ -160,20 +166,19 @@
                             qTotalSent.html(totalSent);
 
                             $('#mailingTable tr').last().remove();
-                            let img = "{{ asset('img/AquaBallGreen.png') }}";
                             $('#mailingTable tr').last().after('<tr>' +
                                 '<td>' + totalSent + '</td>' +
                                 '<td>' + response.session.composes_pending.to + '</td>' +
                                 '<td>' + response.session.composes_pending.first_name + ' ' +
                                 response.session.composes_pending.last_name + '</td>' +
                                 '<td>' + response.session.composes_pending.company_name + '</td>' +
-                                '<td>Mail Sent <img src="' + img + '" style="height: 10px; padding-left: 5px;" alt=""/></td>' +
+                                '<td>Mail Sent <i class="fa-solid fa-circle-check text-success"></i></td>' +
                                 '</tr>');
 
                             getEmail();
                         } else {
                             $('#mailingTable tr').last().after('<tr>' +
-                                '<td colspan="5" class="text-center"> <b>Completed</b> </td>' +
+                                '<td colspan="5" class="text-center text-success"> <b>Completed</b> </td>' +
                                 '</tr>');
                         }
                     }

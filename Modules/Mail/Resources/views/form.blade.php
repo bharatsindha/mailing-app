@@ -1,5 +1,5 @@
 <div class="row align-items-center">
-    <div class="col-md-12 mb-3">
+    <div class="col-md-12 mb-4">
         <label for="domain_id">{{ __('Select Domain') }}</label>
         <select class="form-select mb-0 {{ $errors->has('domain_id') ? 'is-invalid' : '' }} on-change-domain"
                 id="domain_id"
@@ -17,7 +17,7 @@
         @endif
     </div>
 
-    <div class="col-md-12 mb-3">
+    <div class="col-md-12 mb-4">
         <label for="email_id">{{ __('Select Sender Email') }}</label>
         <select class="form-select mb-0 {{ $errors->has('email_id') ? 'is-invalid' : '' }}"
                 id="email_id"
@@ -30,7 +30,7 @@
         @endif
     </div>
 
-    <div class="col-md-12 mb-3">
+    <div class="col-md-12 mb-4">
         <label for="excelFile">{{ __('Upload excel File') }}</label>
         <small class="form-text text-muted">( Please
             <a href="{{ asset('img/sample-excel-sheet-format.png') }}" target="_blank"><b>click here</b></a>
@@ -44,7 +44,7 @@
         @endif
     </div>
 
-    <div class="col-md-12 mb-3">
+    <div class="col-md-12 mb-4">
         <div>
             <label for="subject">{{ __('Subject') }}</label>
             <input class="form-control {{ $errors->has('subject') ? 'is-invalid' : '' }}" id="subject"
@@ -57,7 +57,7 @@
             @endif
         </div>
     </div>
-    <div class="col-md-12 mb-3">
+    <div class="col-md-12 mb-4">
         <div>
             <label for="mail_content">{{ __('Mail Content') }}</label>
             <textarea class="form-control {{ $errors->has('mail_content') ? 'is-invalid' : '' }}"

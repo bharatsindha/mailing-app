@@ -30,3 +30,32 @@
 .gmail-config p, .gmail-config ol li, .gmail-config ul li{
     font-size: 0.827rem;
 }
+
+.action-icon-hover:hover{
+    color: #1F2937 !important;
+}
+
+.fs-827{
+    font-size: 0.827rem !important;
+}
+
+.text-break{
+    white-space: inherit !important;
+}
+
+.mail-content-view, .form-field-view {
+    background-color: #F2F4F6;
+    display: block;
+    padding: 0.5rem 0.827rem;
+    color: inherit;
+    border-radius: 8px;
+    /*box-shadow: rgb(0 0 0 / 10%) 0px 1px 2px 0px;*/
+}
+
+.mail-content-view p {
+    font-size: 0.827rem;
+}
+
+.badge-custom{
+    padding: 0.3rem 0.6rem;
+}

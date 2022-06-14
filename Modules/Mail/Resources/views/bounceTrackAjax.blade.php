@@ -30,7 +30,7 @@
                             <td>
                                 <div class="text-end">
                                     <div class="btn-group">
-                                        <a class="dropdown-item d-flex align-items-center"
+                                        <a class="dropdown-item d-flex align-items-center" style="padding-right: 0"
                                            onclick="checkGMail('{{ $result->id }}','{{ $result->sender_email }}', '{{ $result->domain_id }}');">
                                                 <span class="dropdown-icon text-gray-400 me-2">
                                                     <i class="fa-solid fa-circle-play"></i>

@@ -1,6 +1,6 @@
 <div class="table-responsive">
     @if (count($results) > 0)
-        <table class="table table-centered table-nowrap mb-0 rounded" style="min-height: 25vh;">
+        <table class="table table-centered table-nowrap mb-0 rounded">
             <thead class="thead-light">
             <tr>
                 <th class="border-0 rounded-start">{{ __('#') }}</th>

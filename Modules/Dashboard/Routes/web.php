@@ -19,5 +19,7 @@ Route::prefix('dashboard')
     ->middleware(['auth', "check.role.web:$role"])
     ->name('admin.')
     ->group(function () {
-        Route::get('/', 'DashboardController@index')->name('dashboard');
+        Route::get('/', function () {
+            return redirect()->route('home');
+        })->name('dashboard');
     });

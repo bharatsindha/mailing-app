@@ -18,11 +18,11 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Domain Name') }}</label>
                             <div class="small text-gray">{{ $result->domain->name }}</div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-4">
                             <label for="name">{{ __('Created At') }}</label>
                             <div
                                 class="small text-gray">{{ \App\Facades\General::dateFormat($result->created_at) }}</div>
@@ -38,9 +38,9 @@
                             <div class="small text-gray">{{ ucfirst($result->sender_email) }}</div>
                         </div>
                     </div>
-                    @include('actions.form_actions', ['back' => true])
                 </div>
             </div>
+            @include('actions.form_actions', ['back' => true])
         </div>
         <div class="col-12 col-xl-4"></div>
     </div>

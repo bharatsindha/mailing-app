@@ -1,22 +1,12 @@
 @charset "UTF-8";
-/*
+/*@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");*/
 
-=========================================================
-* Volt - Free Bootstrap 5 Dashboard
-=========================================================
+@font-face {
+    font-family: GtHaptikregular;
+    src: url(../fonts/vendor/GTHaptik/GT-Haptik-Regular-2.ttf);
+}
 
-* Product Page: https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard
-* Copyright 2021 Themesberg (https://www.themesberg.com)
-
-* Designed and coded by https://themesberg.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Please contact us to request a removal. Contact us if you want to remove it.
-
-*/
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
-
+/*/vendor/GTHaptik/GT-Haptik-Regular-2.ttf*/
 .datepicker {
     display: none;
 }
@@ -1048,7 +1038,7 @@
     --bs-black-rgb: 17, 24, 39;
     --bs-body-color-rgb: 55, 65, 81;
     --bs-body-bg-rgb: 242, 244, 246;
-    --bs-font-sans-serif: "Inter", sans-serif;
+    --bs-font-sans-serif: GtHaptikregular;
     --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     --bs-body-font-family: var(--bs-font-sans-serif);
@@ -23072,7 +23062,7 @@ label {
 .accordion-button::after {
     background-image: none;
     content: "\f067";
-    font-family: "Font Awesome 5 Free";
+    font-family: GtHaptikregular;
     font-size: 1rem;
     font-weight: 900;
 }
@@ -25244,7 +25234,7 @@ label {
 
 .carousel-control-prev-icon::before {
     content: "\f060";
-    font-family: "Font Awesome 5 Free";
+    font-family: GtHaptikregular;
     font-size: 2rem;
 }
 
@@ -25253,7 +25243,7 @@ label {
 }
 
 .carousel-control-next-icon:before {
-    font-family: "Font Awesome 5 Free";
+    font-family: GtHaptikregular;
     content: "\f061";
     font-size: 2rem;
 }
@@ -25351,7 +25341,7 @@ label {
 
 .rating-star label:before {
     content: "\f005";
-    font-family: "Font Awesome 5 Free";
+    font-family: GtHaptikregular;
     font-weight: 900;
     transition: all 0.2s ease;
     font-size: 1.0625rem;
@@ -27992,7 +27982,7 @@ label {
  */
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: "Inter", sans-serif;
+    font-family: GtHaptikregular;
     font-weight: 500;
 }
 

@@ -99,6 +99,44 @@ class Session extends Model
     }
 
     /**
+     * Return sent details of session from compose
+     *
+     * @param $sessionId
+     * @return mixed
+     */
+    public static function getSentDetails($sessionId)
+    {
+
+        $status = request()->input('status');
+
+        $compose = null;
+        if ($status == 'sent')
+            $compose = self::find($sessionId)->composesSent();
+        else if ($status == 'opened')
+            $compose = self::find($sessionId)->composesOpened();
+        else if ($status == 'bounced')
+            $compose = self::find($sessionId)->composesBounced();
+        else
+            $compose = self::find($sessionId)->composes();
+
+        $compose->when(request()->filled('q'), function ($q) {
+            $keyword = request()->input('q');
+            $q->where(function ($query) use ($keyword) {
+                $query->where('first_name', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('to', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('bcc', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('designation', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('project_name', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('company_name', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('cc', 'LIKE', '%' . $keyword . '%');
+            });
+        });
+
+        return $compose;
+    }
+
+    /**
      * Get pending session data
      *
      * @param $sessionId

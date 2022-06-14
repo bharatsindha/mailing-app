@@ -1,8 +1,8 @@
 @if (count($results) > 0)
-<div class="card border-0 shadow mb-4">
-    <div class="card-body">
-        <div class="table-responsive">
-                <table class="table table-centered table-nowrap mb-0 rounded" style="min-height: 25vh;">
+    <div class="card border-0 shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-centered table-nowrap mb-0 rounded">
                     <thead class="thead-light">
                     <tr>
                         <th class="border-0 rounded-start">{{ __('#') }}</th>
@@ -32,37 +32,29 @@
                             <td>
                                 <div class="text-end">
                                     <div class="btn-group">
-                                        <button
-                                            class="btn btn-link text-dark dropdown-toggle dropdown-toggle-split m-0 p-0"
-                                            data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            @include('icons.action-toggle')
-                                        </button>
-                                        <div class="dropdown-menu dashboard-dropdown dropdown-menu-start mt-2 py-1"
-                                             style="">
-                                            <a class="dropdown-item d-flex align-items-center"
-                                               href="{{ route('admin.drafts.show', $result->id) }}">
-                                                @include('icons.view')
-                                                View Draft
-                                            </a>
-                                            <a class="dropdown-item d-flex align-items-center"
-                                               onclick="checkGmail('{{ $result->id }}', '{{ $result->sender_email }}', '{{ $result->domain_id }}');">
-                                                <span class="dropdown-icon text-gray-400 me-2">
-                                                    <i class="fa-solid fa-paper-plane"></i>
+                                        <a class="d-flex align-items-center"
+                                           href="{{ route('admin.drafts.show', $result->id) }}">
+                                            <span class="text-gray-400 me-2 action-icon-hover" title="View Draft">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </span>
+                                        </a>
+                                        <a class="d-flex align-items-center"
+                                           onclick="checkGmail('{{ $result->id }}', '{{ $result->sender_email }}', '{{ $result->domain_id }}');">
+                                            <span class="text-gray-400 me-2 action-icon-hover" title="Start Mailing">
+                                                <i class="fa-solid fa-paper-plane"></i>
+                                            </span>
+                                        </a>
+                                        <form method="post" class=""
+                                              action="{{ route('admin.drafts.destroy', $result->id) }}">
+                                            @csrf
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button type="submit"
+                                                    class="d-flex align-items-center border-0 bg-transparent p-0">
+                                                <span class="text-gray-400 me-2 action-icon-hover">
+                                                    <i class="fa-solid fa-trash-can"></i>
                                                 </span>
-                                                Start Email
-                                            </a>
-                                            <div role="separator" class="dropdown-divider my-1"></div>
-                                            <form method="post" class=""
-                                                  action="{{ route('admin.drafts.destroy', $result->id) }}">
-                                                @csrf
-                                                <input name="_method" type="hidden" value="DELETE">
-                                                <button type="submit" class="dropdown-item d-flex align-items-center">
-                                                    @include('icons.delete')
-                                                    Remove
-                                                </button>
-                                            </form>
-                                        </div>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                             </td>
@@ -76,9 +68,9 @@
                         {{ $results->links('pagination.bootstrap-5') }}
                     </div>
                 </div>
+            </div>
         </div>
     </div>
-</div>
 @else
     @include('notFound.searchNotFound', ['message' => "We're sorry what you were looking for. Please add new draft."])
 @endif
